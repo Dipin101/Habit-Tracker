@@ -63,13 +63,13 @@ const Navbar = () => {
           className="mb-4 p-2 rounded hover:bg-gray-700"
         >
           Analytics
-        </NavLink>
+        </NavLink>*/}
         <NavLink
-          to="/dashboard/settings"
+          to="/dashboard/loading"
           className="mb-4 p-2 rounded hover:bg-gray-700"
         >
-          Settings
-        </NavLink> */}
+          Loader
+        </NavLink>
         <button
           onClick={handleLogout}
           className="mt-auto p-2 rounded bg-red-500 hover:bg-red-600"

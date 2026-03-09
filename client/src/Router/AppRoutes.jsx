@@ -13,33 +13,49 @@ import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import Analytics from "../pages/Analytics";
 
+import Loading from "../components/Loading";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const AppRoutes = () => {
   return (
-    <Routes>
-      {/* public routes */}
-      <Route index element={<Homepage />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/signup" element={<Signup />} />
-      {/* These are the protected routes */}
-      {/* Route should cover everything that should be nested */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboardlayout />
-          </ProtectedRoute>
-        }
-      >
-        {/* Nested routes inside Outlet */}
-        <Route index element={<Dashboard />} /> {/* --> Dashboard */}
-        <Route path="habittrack" element={<HabitTrack />} />
-        <Route path="expensetrack" element={<ExpenseTrack />} />
-        <Route path="jobtrack" element={<JobTrack />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="analytics" element={<Analytics />} />
-      </Route>
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* public routes */}
+        <Route index element={<Homepage />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        {/* These are the protected routes */}
+        {/* Route should cover everything that should be nested */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboardlayout />
+            </ProtectedRoute>
+          }
+        >
+          {/* Nested routes inside Outlet */}
+          <Route index element={<Dashboard />} /> {/* --> Dashboard */}
+          <Route path="habittrack" element={<HabitTrack />} />
+          <Route path="expensetrack" element={<ExpenseTrack />} />
+          <Route path="jobtrack" element={<JobTrack />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="loading" element={<Loading />} />
+          <Route path="analytics" element={<Analytics />} />
+        </Route>
+      </Routes>
+    </>
   );
 };
 
