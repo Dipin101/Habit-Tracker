@@ -131,7 +131,7 @@ const ZoomBridge = () => {
   );
   const clarityOpacity = useTransform(
     scrollYProgress,
-    [0.85, 0.9, 0.95, 0.99],
+    [0.82, 0.87, 0.95, 0.99],
     [0, 1, 1, 0],
   );
   const clarityY = useTransform(scrollYProgress, [0.85, 0.95], [30, 0]);
@@ -140,7 +140,7 @@ const ZoomBridge = () => {
     [0.45, 0.6, 0.75, 0.85],
     [0, 1, 1, 0],
   );
-  const cardScale = useTransform(scrollYProgress, [0.98, 1], [1, 8]);
+  const cardScale = useTransform(scrollYProgress, [0.95, 1], [1, 8]);
   const overlayOpacity = useTransform(scrollYProgress, [0.98, 1], [0, 1]);
 
   return (

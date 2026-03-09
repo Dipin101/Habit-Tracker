@@ -28,10 +28,18 @@ const Homepage = () => {
   return (
     <div className="bg-background">
       <Navbar />
-      {/* hero Section */}
+
+      {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 py-12 overflow-hidden">
-        <div className="absolute top-20 -left-6 md:-left-20 w-40 md:w-72 h-40 md:h-72 bg-orange-200 rounded-full blur-3xl opacity-30 pointer-events-none" />
-        <div className="absolute bottom-10 -right-6 md:-right-20 w-56 md:w-96 h-56 md:h-96 bg-purple-200 rounded-full blur-3xl opacity-40 pointer-events-none" />
+        {/* Blobs — accent palette */}
+        <div
+          className="absolute top-20 -left-6 md:-left-20 w-40 md:w-72 h-40 md:h-72 rounded-full blur-3xl opacity-20 pointer-events-none"
+          style={{ background: "#C89FBB" }}
+        />
+        <div
+          className="absolute bottom-10 -right-6 md:-right-20 w-56 md:w-96 h-56 md:h-96 rounded-full blur-3xl opacity-20 pointer-events-none"
+          style={{ background: "#93B5A0" }}
+        />
 
         <div className="flex flex-col md:flex-row w-full justify-between max-w-6xl mx-auto gap-6 md:gap-10 lg:gap-16 items-center">
           <motion.div
@@ -41,9 +49,9 @@ const Homepage = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             onAnimationComplete={() => imageSettled && setTextDone(true)}
           >
-            <div className="flex flex-col items-center md:items-center gap-5 w-full text-center">
+            <div className="flex flex-col items-center gap-5 w-full text-center">
               <motion.h1
-                className="text-3xl md:text-4xl lg:text-5xl font-bold"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-text"
                 variants={textVariants}
                 initial="hidden"
                 animate={imageSettled ? "visible" : "hidden"}
@@ -53,7 +61,7 @@ const Homepage = () => {
                     {char === " " ? "\u00A0" : char}
                   </motion.span>
                 ))}
-                <span className="text-cta-button">
+                <span className="text-accent-pink">
                   {"SELF".split("").map((char, i) => (
                     <motion.span key={i} variants={letterVariants}>
                       {char}
@@ -61,8 +69,9 @@ const Homepage = () => {
                   ))}
                 </span>
               </motion.h1>
+
               <motion.p
-                className="text-base md:text-lg lg:text-xl"
+                className="text-base md:text-lg lg:text-xl text-sub-text"
                 variants={textVariants}
                 initial="hidden"
                 animate={imageSettled ? "visible" : "hidden"}
@@ -76,10 +85,16 @@ const Homepage = () => {
                   ))}
               </motion.p>
             </div>
-            <div className="flex flex-col gap-6 items-center justify-center md:flex-row md:items-center md:justify-center">
+
+            <div className="flex flex-col gap-4 items-center justify-center md:flex-row">
+              {/* Start Tracking */}
               <Link to="/signup">
                 <motion.button
-                  className="p-4 bg-cta-button rounded-full shadow-cta text-white uppercase font-bold"
+                  className="px-6 py-4 rounded-full text-white uppercase font-bold text-sm tracking-wide"
+                  style={{
+                    background: "linear-gradient(135deg, #C89FBB, #a87d9a)",
+                    boxShadow: "0 8px 24px rgba(200,159,187,0.35)",
+                  }}
                   initial={{ opacity: 0, rotate: -180, scale: 0 }}
                   animate={textDone ? { scale: 1, rotate: 0, opacity: 1 } : {}}
                   transition={{ duration: 1, ease: "backOut" }}
@@ -88,9 +103,15 @@ const Homepage = () => {
                   Start Tracking
                 </motion.button>
               </Link>
+
+              {/* View Demo */}
               <Link to="/#">
                 <motion.button
-                  className="p-4 border-2 rounded-full shadow-cta bg-transparent"
+                  className="px-6 py-4 rounded-full bg-transparent text-sm font-medium"
+                  style={{
+                    border: "2px solid #93B5A0",
+                    color: "#5a7a8f",
+                  }}
                   initial={{ opacity: 0, rotate: -180, scale: 0 }}
                   animate={textDone ? { scale: 1, rotate: 0, opacity: 1 } : {}}
                   transition={{ duration: 1, ease: "backOut" }}
@@ -101,6 +122,8 @@ const Homepage = () => {
               </Link>
             </div>
           </motion.div>
+
+          {/* Hero image */}
           <motion.img
             className="hidden md:block md:max-w-[280px] lg:max-w-md xl:max-w-lg h-auto"
             src={heroImage}
@@ -119,22 +142,27 @@ const Homepage = () => {
             onAnimationComplete={() => setImageSettled(true)}
           />
         </div>
+
+        {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 "
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           initial={{ opacity: 0 }}
           animate={textDone ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
         >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <span className="text-xs uppercase tracking-widest text-sub-text">
+            Scroll
+          </span>
           <motion.div
-            className="w-0.5 h-8 bg-gray-400"
+            className="w-0.5 h-8 bg-accent-green"
             animate={{ scaleY: [0, 1, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           />
         </motion.div>
       </section>
-      <div style={{ position: "relative", zIndex: 1 }}></div>
-      <ZoomBridge description="The simple way to build habits that lasts." />
+
+      <div style={{ position: "relative", zIndex: 1 }} />
+      <ZoomBridge />
       <div style={{ position: "relative", zIndex: 20, marginTop: "-5vh" }}>
         <StickyFeature />
       </div>
@@ -147,7 +175,10 @@ const Homepage = () => {
       />
 
       {/* About section */}
-      <section className="bg-background px-6 md:px-16 lg:px-24 py-24">
+      <section
+        id="about"
+        className="bg-background px-6 md:px-16 lg:px-24 py-24"
+      >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
           {/* Left — label */}
           <div className="flex flex-col gap-3 md:w-1/3">

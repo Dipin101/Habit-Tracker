@@ -148,6 +148,7 @@ const StickyFeature = () => {
 
   return (
     <section
+      id="features"
       ref={ref}
       style={{ height: `${FEATURES.length * 100}vh` }}
       className="relative"
@@ -194,12 +195,12 @@ const StickyFeature = () => {
         </div>
 
         {/* Feature number */}
-        <div className="absolute left-8 top-8 z-20">
+        {/* <div className="absolute left-8 top-8 z-20">
           <p className="text-white/20 text-xs uppercase tracking-widest">
             {String(activeIdx + 1).padStart(2, "0")} /{" "}
             {String(FEATURES.length).padStart(2, "0")}
           </p>
-        </div>
+        </div> */}
 
         {/* Slides */}
         {FEATURES.map((feature, i) => (

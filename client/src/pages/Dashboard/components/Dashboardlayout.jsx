@@ -1,20 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../../../components/Navbar";
+import { motion } from "framer-motion";
 
-const Dashboardlayout = () => {
+const DashboardLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      darkMode ? "dark" : "light",
+    );
+  }, [darkMode]);
+
   return (
-    <div className="bg-gray-800 text-white w-full fixed top-0 left-0 z-50">
-      <Navbar />
+    <div className="min-h-screen flex bg-background">
+      <Navbar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        // darkMode={darkMode}
+        // setDarkMode={setDarkMode}
+      />
 
-      {/* Content area */}
-      <div className="ml-64 flex-1 p-6 m-3 bg-white rounded shadow min-h-[calc(100vh-1.5rem)]">
-        <h1 className="text-2xl font-bold mb-2">Dashboard Content</h1>
-        {/**This should render the content of the nested route */}
+      <motion.main
+        animate={{ marginLeft: isMobile ? 0 : sidebarOpen ? 240 : 68 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="flex-1 min-h-screen p-4 md:p-6 pb-24 md:pb-6 min-w-0"
+      >
         <Outlet />
-      </div>
+      </motion.main>
     </div>
   );
 };
 
-export default Dashboardlayout;
+export default DashboardLayout;
