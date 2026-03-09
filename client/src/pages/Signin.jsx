@@ -7,9 +7,12 @@ import { auth } from "../firebase";
 import { fetchFromBackend } from "../api.js";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import Loading from "../components/Loading.jsx";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -19,6 +22,8 @@ const Signin = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
+    setAuthError("");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -35,7 +40,17 @@ const Signin = () => {
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
-      alert("Something went wrong");
+      if (
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/user-not-found"
+      ) {
+        setAuthError("Email or password did not match.");
+      } else {
+        setAuthError("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -198,6 +213,15 @@ const Signin = () => {
             </span>
           </div>
 
+          {authError && (
+            <motion.p
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-xs text-center text-error"
+            >
+              {authError}
+            </motion.p>
+          )}
           {/* Forgot password */}
           {/* <div className="flex justify-end -mt-2">
             <button
@@ -211,12 +235,27 @@ const Signin = () => {
           {/* Submit */}
           <motion.button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full py-3 rounded-xl text-sm font-semibold text-white mt-2"
-            style={{ background: "linear-gradient(135deg, #C89FBB, #a87d9a)" }}
+            disabled={isLoading}
+            whileHover={!isLoading ? { scale: 1.02 } : {}}
+            whileTap={!isLoading ? { scale: 0.98 } : {}}
+            className="w-full py-3 rounded-xl text-sm font-semibold text-white mt-2 flex items-center justify-center gap-2"
+            style={{
+              background: "linear-gradient(135deg, #C89FBB, #a87d9a)",
+              opacity: isLoading ? 0.8 : 1,
+            }}
           >
-            Sign In
+            {isLoading ? (
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="w-4 h-4 rounded-full border-2 border-white border-t-transparent"
+                />
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </motion.button>
         </form>
 
