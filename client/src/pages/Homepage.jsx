@@ -163,7 +163,7 @@ const Homepage = () => {
 
       <div style={{ position: "relative", zIndex: 1 }} />
       <ZoomBridge />
-      <div style={{ position: "relative", zIndex: 20, marginTop: "-5vh" }}>
+      <div style={{ position: "relative", zIndex: 20, marginTop: "-5dvh" }}>
         <StickyFeature />
       </div>
       <div
