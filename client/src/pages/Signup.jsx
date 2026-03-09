@@ -11,6 +11,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
 
   const {
@@ -20,6 +22,8 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setIsLoading(true);
+    setAuthError("");
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -40,12 +44,23 @@ const Signup = () => {
       });
       console.log("Registration successful:", res.message || res);
       navigate("/signin");
-    } catch (errors) {
-      console.log("Server Error: ", errors);
+    } catch (error) {
+      console.log("Server Error: ", error);
+      if (error.code === "auth/email-already-in-use") {
+        setAuthError("An account with this email already exists.");
+      } else if (error.code === "auth/weak-password") {
+        setAuthError("Password is too weak.");
+      } else {
+        setAuthError("Something went wrong. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const googleLogin = async () => {
+    setIsLoading(true);
+    setAuthError("");
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -60,7 +75,9 @@ const Signup = () => {
       navigate("/dashboard");
     } catch (error) {
       console.error("Google login failed:", error.message || error);
-      alert(error.message || "Google login failed");
+      setAuthError("Google sign in failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -277,29 +294,58 @@ const Signup = () => {
             </div>
           </InputField>
 
+          {authError && (
+            <motion.p
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-xs text-center text-error"
+            >
+              {authError}
+            </motion.p>
+          )}
+
           {/* Buttons */}
           <div className="flex flex-col gap-3 mt-2">
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-3 rounded-xl text-sm font-semibold text-white"
+              disabled={isLoading}
+              whileHover={!isLoading ? { scale: 1.02 } : {}}
+              whileTap={!isLoading ? { scale: 0.98 } : {}}
+              className="w-full py-3 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2"
               style={{
                 background: "linear-gradient(135deg, #C89FBB, #a87d9a)",
+                opacity: isLoading ? 0.8 : 1,
               }}
             >
-              Create Account
+              {isLoading ? (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="w-4 h-4 rounded-full border-2 border-white border-t-transparent"
+                  />
+                  Creating account...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </motion.button>
 
             <motion.button
               type="button"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isLoading}
+              whileHover={!isLoading ? { scale: 1.02 } : {}}
+              whileTap={!isLoading ? { scale: 0.98 } : {}}
               onClick={googleLogin}
               className="w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 text-text"
               style={{
                 background: "rgba(255,255,255,0.7)",
                 border: "1px solid rgba(0,0,0,0.08)",
+                opacity: isLoading ? 0.8 : 1,
               }}
             >
               <svg width="18" height="18" viewBox="0 0 48 48">
@@ -320,7 +366,7 @@ const Signup = () => {
                   d="M43.6 20H24v8h11.3c-.9 2.4-2.5 4.4-4.6 5.8l6.2 5.2C40.9 35.5 44 30.2 44 24c0-1.3-.1-2.7-.4-4z"
                 />
               </svg>
-              Continue with Google
+              {isLoading ? "Connecting..." : "Continue with Google"}
             </motion.button>
           </div>
         </form>
