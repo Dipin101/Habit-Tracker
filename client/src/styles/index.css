@@ -1,16 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
-body {
-  user-select: none;
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --font-heading: "Roboto", sans-serif;
+
+  --color-background: #ebf5fa;
+  --color-card: #ddeef7;
+  --color-text: #0d2233;
+  --color-sub-text: #5a7a8f;
+  --color-accent-pink: #c89fbb;
+  --color-accent-pink-dark: #a87d9a;
+  --color-accent-green: #93b5a0;
+  --color-logout-red: #dc2626;
+  --color-error: #f87171;
+  --color-dark-bg: #0a0a0a;
+  --color-dark-card: rgba(30, 15, 25, 0.95);
+  --shadow-cta: 5px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow-x: hidden;
+/* ← dark mode overrides OUTSIDE @theme */
+@layer base {
+  html,
+  body {
+    user-select: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 100vh;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    overflow-x: clip;
+  }
+
+  /* ← dark theme variables here */
+  [data-theme="dark"] {
+    --color-background: #0f1923;
+    --color-card: #1a2633;
+    --color-text: #e8f4f8;
+    --color-sub-text: #7a9db0;
+    --color-accent-pink: #c89fbb;
+    --color-accent-pink-dark: #a87d9a;
+    --color-accent-green: #93b5a0;
+  }
 }
-html {
-  scroll-behavior: smooth;
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }

@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import Navbar from "../components/Navbar.jsx";
 import { fetchFromBackend } from "../api.js";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +17,7 @@ const Signin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (data) => {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -24,7 +26,6 @@ const Signin = () => {
         data.password,
       );
       const uid = userCredential.user.uid;
-
       const res = await fetchFromBackend("/api/users/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,127 +39,206 @@ const Signin = () => {
     }
   };
 
+  const inputStyle = {
+    background: "rgba(255,255,255,0.6)",
+    border: "1px solid rgba(0,0,0,0.08)",
+  };
+
+  const focusStyle = (e) =>
+    (e.target.style.borderColor = "rgba(147,181,160,0.6)");
+  const blurStyle = (e) => (e.target.style.borderColor = "rgba(0,0,0,0.08)");
+
   return (
-    <div className="h-screen flex flex-col">
-      <Navbar></Navbar>
+    <div className="min-h-screen bg-background flex items-center justify-center px-6 py-16 relative overflow-hidden">
+      {/* Background glows */}
+      <div
+        className="fixed top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: "rgba(244,162,97,0.15)", filter: "blur(80px)" }}
+      />
+      <div
+        className="fixed bottom-1/4 right-1/4 w-96 h-96 rounded-full pointer-events-none"
+        style={{ background: "rgba(200,159,187,0.12)", filter: "blur(80px)" }}
+      />
 
-      <div className=" flex flex-1 md:flex-row">
-        {/* Left Side - Logo & Animation */}
-        <div className="hidden md:w-1/2 md:flex items-center justify-center bg-gradient-to-br from-[#2c2d5a] to-[#1e1f3f] p-4 relative overflow-hidden">
-          {/* Floating animated circles for subtle background motion */}
-          <div className="absolute w-40 h-40 bg-green-500 rounded-full opacity-20 animate-ping -top-10 -left-10"></div>
-          <div className="absolute w-32 h-32 bg-green-400 rounded-full opacity-20 animate-pulse top-20 right-10"></div>
-          <div className="absolute w-24 h-24 bg-green-600 rounded-full opacity-30 animate-bounce bottom-10 left-16"></div>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="relative w-full max-w-md flex flex-col gap-6 px-8 py-10 md:px-12 md:py-12 rounded-3xl bg-card"
+        style={{
+          boxShadow:
+            "0 8px 40px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8)",
+          border: "1px solid rgba(255,255,255,0.6)",
+        }}
+      >
+        {/* Top glow */}
+        <div
+          className="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-16 rounded-full pointer-events-none"
+          style={{ background: "rgba(200,159,187,0.2)", filter: "blur(40px)" }}
+        />
 
-          {/* Logo & text in center */}
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <h1 className="text-9xl text-white font-extrabold">OA</h1>
-            <h2 className="text-3xl font-bold text-green-400">OneApp</h2>
-            <p className="text-gray-200 mt-2 max-w-xs">
-              Track your habits, expenses, and job applications easily.
-            </p>
-          </div>
+        {/* Header */}
+        <div className="flex flex-col items-center gap-2 text-center">
+          <span
+            className="px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-[0.25em] text-sub-text"
+            style={{
+              background: "rgba(147,181,160,0.15)",
+              border: "1px solid rgba(147,181,160,0.3)",
+            }}
+          >
+            Welcome back
+          </span>
+          <h1 className="text-3xl md:text-4xl font-bold mt-2 text-text">
+            Sign In
+          </h1>
+          <p className="text-sm text-sub-text">Continue your streak today</p>
         </div>
-        <div className="md:w-1/2 flex items-center justify-center p-6">
-          <div className="w-full max-w-md">
-            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-center">
-              Sign In
-            </h1>
 
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col justify-center items-center my-auto text-4xl"
-            >
-              {/* making email */}
-              <label htmlFor="email" className="flex flex-col gap-1">
-                Email
-                <input
-                  className="p-3 md:p-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 leading-normal"
-                  type="email"
-                  placeholder="Email"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value:
-                        /^[\w.-]+@(gmail|yahoo|hotmail|outlook|rocketmail)\.com$/,
-                      message: "Invalid email format",
-                    },
-                  })}
-                />
-                <span className="text-sm text-red-500 min-h-[1.25rem]">
-                  {errors.email ? errors.email.message : "\u00A0"}
-                </span>
-              </label>
+        {/* Divider */}
+        <div className="flex items-center gap-3">
+          <div
+            className="flex-1 h-px"
+            style={{ background: "rgba(0,0,0,0.06)" }}
+          />
+          <div className="w-1.5 h-1.5 rounded-full bg-accent-green" />
+          <div
+            className="flex-1 h-px"
+            style={{ background: "rgba(0,0,0,0.06)" }}
+          />
+        </div>
 
-              {/* password */}
-              <label
-                htmlFor="password"
-                className="flex flex-col gap-1 relative"
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          {/* Email */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs uppercase tracking-widest font-medium text-sub-text">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all text-text"
+              style={inputStyle}
+              onFocus={focusStyle}
+              onBlur={blurStyle}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value:
+                    /^[\w.-]+@(gmail|yahoo|hotmail|outlook|rocketmail)\.com$/,
+                  message: "Invalid email format",
+                },
+              })}
+            />
+            <span className="text-xs min-h-[1rem] text-error">
+              {errors.email ? errors.email.message : ""}
+            </span>
+          </div>
+
+          {/* Password */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs uppercase tracking-widest font-medium text-sub-text">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none pr-12 text-text"
+                style={{
+                  ...inputStyle,
+                  transition: "letter-spacing 0.3s ease, opacity 0.3s ease",
+                  letterSpacing: showPassword ? "0.05em" : "0.2em",
+                  opacity: showPassword ? 1 : 0.8,
+                }}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
+                {...register("password", {
+                  required: "The password is required",
+                  minLength: {
+                    value: 7,
+                    message: "Minimum 7 characters needed",
+                  },
+                  maxLength: { value: 100, message: "Too long" },
+                })}
+              />
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.85 }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 hover:opacity-70 text-sub-text"
+                onClick={() => setShowPassword((prev) => !prev)}
               >
-                Password
-                <input
-                  className="p-3 md:p-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  {...register("password", {
-                    required: "The password is required",
-                    minLength: {
-                      value: 7,
-                      message: "Minimum 7 characters needed",
-                    },
-                    maxLength: { value: 100, message: "Too long" },
-                  })}
-                />
-                <button
-                  type="button"
-                  className="absolute right-4 top-20 -translate-y-1/2 text-gray-500"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
+                <AnimatePresence mode="wait">
                   {showPassword ? (
-                    <AiFillEyeInvisible size={35} />
+                    <motion.span
+                      key="hide"
+                      initial={{ opacity: 0, rotate: -15 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: 15 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <AiFillEyeInvisible size={20} />
+                    </motion.span>
                   ) : (
-                    <AiFillEye size={35} />
+                    <motion.span
+                      key="show"
+                      initial={{ opacity: 0, rotate: 15 }}
+                      animate={{ opacity: 1, rotate: 0 }}
+                      exit={{ opacity: 0, rotate: -15 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <AiFillEye size={20} />
+                    </motion.span>
                   )}
-                </button>
-                <span className="text-red-500 text-sm min-h-[1.25rem]">
-                  {errors.password ? errors.password.message : "\u00A0"}
-                </span>
-              </label>
-
-              {/*  forgot */}
-              <div className="flex w-full justify-end my-5 text-2xl">
-                <button
-                  type="button"
-                  className="text-blue-600 hover:underline"
-                  // onClick={() => navigate("/forgot-password")}
-                >
-                  Forgot password?
-                </button>
-              </div>
-
-              {/* button */}
-              <button
-                type="submit"
-                className="w-full md:w-auto text-2xl bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-3 rounded-full transition transform hover:scale-105 active:scale-100"
-              >
-                Sign In
-              </button>
-
-              {/* signup redirect */}
-              <p className="text-center text-base mt-2">
-                Don’t have an account?{" "}
-                <button
-                  type="button"
-                  onClick={() => navigate("/signup")}
-                  className="text-blue-600 hover:underline font-medium"
-                >
-                  Sign up
-                </button>
-              </p>
-            </form>
+                </AnimatePresence>
+              </motion.button>
+            </div>
+            <span className="text-xs min-h-[1rem] text-error">
+              {errors.password ? errors.password.message : ""}
+            </span>
           </div>
-        </div>
-      </div>
+
+          {/* Forgot password */}
+          {/* <div className="flex justify-end -mt-2">
+            <button
+              type="button"
+              className="text-xs hover:opacity-70 transition-opacity text-accent-pink"
+            >
+              Forgot password?
+            </button>
+          </div> */}
+
+          {/* Submit */}
+          <motion.button
+            type="submit"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full py-3 rounded-xl text-sm font-semibold text-white mt-2"
+            style={{ background: "linear-gradient(135deg, #C89FBB, #a87d9a)" }}
+          >
+            Sign In
+          </motion.button>
+        </form>
+
+        {/* Signup redirect */}
+        <p className="text-center text-xs text-sub-text">
+          Don't have an account?{" "}
+          <Link
+            to="/signup"
+            className="font-medium hover:opacity-70 transition-opacity text-accent-pink"
+          >
+            Sign up
+          </Link>
+        </p>
+
+        {/* Back to home */}
+        <Link
+          to="/"
+          className="text-center text-xs hover:opacity-70 transition-opacity text-sub-text"
+        >
+          ← Back to home
+        </Link>
+      </motion.div>
     </div>
   );
 };

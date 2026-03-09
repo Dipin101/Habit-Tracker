@@ -2,10 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 import { fetchFromBackend } from "../api";
+import { motion } from "framer-motion";
 
 const QuoteCard = () => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
+
   const fetchQuote = async () => {
     try {
       const data = await fetchFromBackend("/api/users/quote");
@@ -50,12 +52,31 @@ const QuoteCard = () => {
     }
     fetchQuote();
   }, []);
+
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 text-center">
-      <h3 className="text-lg font-semibold text-gray-500">Quote of the Day</h3>
-      <p className="mt-3 text-xl text-gray-800 italic">"{quote}"</p>
-      <p className="text-gray-400 text-sm mt-2 text-right">— {author}</p>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="relative w-full rounded-2xl p-6 md:p-8 overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #C89FBB22 0%, #93B5A022 100%)",
+        border: "1px solid rgba(200,159,187,0.25)",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
+      }}
+    >
+      {/* Decorative quote mark */}
+
+      <div className="flex flex-col gap-3 relative z-10 items-center text-center">
+        <p className="text-xs uppercase tracking-widest font-bold text-accent-pink">
+          Quote of the Day
+        </p>
+        <p className="text-lg md:text-xl text-text italic font-semibold leading-relaxed max-w-2xl">
+          "{quote}"
+        </p>
+        <p className="text-sm text-sub-text">— {author}</p>
+      </div>
+    </motion.div>
   );
 };
 

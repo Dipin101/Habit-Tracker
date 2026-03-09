@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase"; // adjust path
+import { auth } from "../firebase";
 import { DateTime } from "luxon";
 import { fetchFromBackend } from "../api";
+import { motion } from "framer-motion";
+import { MdLocalFireDepartment } from "react-icons/md";
+
+const streakMessages = [
+  "Keep going!",
+  "Don't break it!",
+  "You're on fire!",
+  "Let's go!",
+  "Stay consistent!",
+];
 
 const StreakCard = () => {
   const [streak, setStreak] = useState(0);
   const [message, setMessage] = useState("");
-  const streakMessages = [
-    "Keep going!",
-    "Don't break it!",
-    "You're on fire!",
-    "Let's go!",
-    "Stay consistent!",
-  ];
 
   useEffect(() => {
     const fetchStreak = async () => {
@@ -24,9 +27,7 @@ const StreakCard = () => {
       try {
         const data = await fetchFromBackend("/api/users/streak", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userId: user.uid, today }),
         });
 
@@ -42,12 +43,50 @@ const StreakCard = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col items-center">
-      <h3 className="text-sm text-gray-500">Current Streak</h3>
-      <p className="text-3xl font-bold text-gray-800 mt-2">
-        🔥 {streak} {streak === 1 ? "day" : "days"}
+    <div className="flex flex-col gap-2">
+      <p className="text-xs uppercase tracking-widest text-sub-text font-medium">
+        Current Streak
       </p>
-      <p className="text-sm text-gray-400 mt-1">{message}</p>
+
+      <div className="flex items-center gap-2">
+        <motion.div
+          animate={{ scale: streak > 0 ? [1, 1.2, 1] : 1 }}
+          transition={{
+            duration: 0.5,
+            repeat: streak > 0 ? Infinity : 0,
+            repeatDelay: 2,
+          }}
+        >
+          <MdLocalFireDepartment
+            size={28}
+            style={{ color: streak > 0 ? "#f97316" : "#93B5A0" }}
+          />
+        </motion.div>
+        <p className="text-2xl font-bold text-text">
+          {streak}{" "}
+          <span className="text-base font-medium text-sub-text">
+            {streak === 1 ? "day" : "days"}
+          </span>
+        </p>
+      </div>
+
+      <p className="text-xs text-sub-text">{message || "Start your streak!"}</p>
+
+      {/* Mini streak bar */}
+      <div className="flex gap-1 mt-1">
+        {Array.from({ length: 7 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex-1 h-1 rounded-full"
+            style={{
+              background:
+                i < streak % 7
+                  ? "linear-gradient(90deg, #C89FBB, #a87d9a)"
+                  : "rgba(0,0,0,0.06)",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
