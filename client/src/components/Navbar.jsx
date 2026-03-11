@@ -9,6 +9,7 @@ import { GoHomeFill, GoChecklist } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { IoAnalyticsSharp } from "react-icons/io5";
+import logo from "/favicon.svg";
 
 const NAV_LINKS = [
   { to: "/dashboard", label: "Dashboard", Icon: GoHomeFill, end: true },
@@ -125,7 +126,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                   transition={{ duration: 0.2 }}
                   className="text-base font-bold text-white tracking-widest uppercase whitespace-nowrap"
                 >
-                  HabitTracker
+                  <img src={logo} width={24} height={24} alt="logo" />
                 </motion.span>
                 <button
                   onClick={() => setSidebarOpen(false)}
@@ -244,7 +245,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="text-base font-bold uppercase tracking-widest text-text"
           >
-            HabitTracker
+            <img src={logo} width={40} height={40} alt="logo" />
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {[

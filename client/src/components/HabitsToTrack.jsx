@@ -13,8 +13,6 @@ const STATUS = {
   NOT_DONE: "not completed",
   IN_PROGRESS: "in progress",
 };
-
-// Modal step: "input" → user types habits, "confirm" → user reviews before locking
 const MODAL_STEP = {
   INPUT: "input",
   CONFIRM: "confirm",
@@ -99,7 +97,6 @@ const HabitsToTrack = () => {
     validateModalInputs(updated);
   };
 
-  // Move from input step → confirmation step
   const handleProceedToConfirm = () => {
     const cleaned = modalInputs
       .map((h) => h.trim())
@@ -111,7 +108,6 @@ const HabitsToTrack = () => {
     setModalStep(MODAL_STEP.CONFIRM);
   };
 
-  // Final confirmation: actually save
   const handleConfirmAndSave = () => {
     const cleaned = modalInputs
       .map((h) => h.trim())
@@ -238,7 +234,6 @@ const HabitsToTrack = () => {
 
   const remainingHabits = MAX_HABITS - savedHabits.length;
 
-  // Habits that will actually be saved (cleaned preview for confirm step)
   const habitsToConfirm = modalInputs
     .map((h) => h.trim())
     .filter(
@@ -428,7 +423,6 @@ const HabitsToTrack = () => {
         </div>
       )}
 
-      {/* Add Habits Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -451,7 +445,6 @@ const HabitsToTrack = () => {
               style={modalStyle}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ── INPUT STEP ── */}
               <AnimatePresence mode="wait">
                 {modalStep === MODAL_STEP.INPUT && (
                   <motion.div
@@ -594,7 +587,6 @@ const HabitsToTrack = () => {
                   </motion.div>
                 )}
 
-                {/* ── CONFIRM STEP ── */}
                 {modalStep === MODAL_STEP.CONFIRM && (
                   <motion.div
                     key="confirm"
@@ -631,7 +623,6 @@ const HabitsToTrack = () => {
                       </button>
                     </div>
 
-                    {/* Strong warning banner */}
                     <div
                       className="flex gap-3 items-start px-3 py-3 rounded-xl"
                       style={{
@@ -656,8 +647,7 @@ const HabitsToTrack = () => {
                       style={{ background: "rgba(0,0,0,0.06)" }}
                     />
 
-                    {/* List of habits to confirm */}
-                    <ul className="flex flex-col gap-2">
+                    <ul className="flex flex-col gap-2 max-h-48 overflow-y-auto">
                       {habitsToConfirm.map((habit, i) => (
                         <motion.li
                           key={i}
@@ -690,7 +680,6 @@ const HabitsToTrack = () => {
                     </ul>
 
                     <div className="flex gap-3 mt-1">
-                      {/* Go back to edit */}
                       <button
                         onClick={() => setModalStep(MODAL_STEP.INPUT)}
                         className="flex-1 py-2.5 rounded-xl text-sm font-medium"
@@ -723,7 +712,6 @@ const HabitsToTrack = () => {
         )}
       </AnimatePresence>
 
-      {/* Comment Modal (unchanged) */}
       <AnimatePresence>
         {showCommentModal && (
           <motion.div

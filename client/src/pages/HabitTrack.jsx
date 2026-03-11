@@ -237,20 +237,20 @@ const HabitTrack = () => {
           </motion.div>
         )}
       </div>
-
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-24 md:bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center text-white z-40"
-        style={{
-          background: "linear-gradient(135deg, #C89FBB, #a87d9a)",
-          boxShadow: "0 8px 24px rgba(200,159,187,0.45)",
-        }}
-        onClick={() => setIsOpen(true)}
-      >
-        <IoAddOutline size={28} />
-      </motion.button>
-
+      {!currentMonthData && (
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-24 md:bottom-8 right-8 w-14 h-14 rounded-full flex items-center justify-center text-white z-40"
+          style={{
+            background: "linear-gradient(135deg, #C89FBB, #a87d9a)",
+            boxShadow: "0 8px 24px rgba(200,159,187,0.45)",
+          }}
+          onClick={() => setIsOpen(true)}
+        >
+          <IoAddOutline size={28} />
+        </motion.button>
+      )}
       <AnimatePresence>
         {isOpen && (
           <motion.div
