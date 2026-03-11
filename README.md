@@ -138,13 +138,13 @@ Clicking a month opens a **detailed report with 4 tabs:**
 
 | v1                                                                   | Current                                                     |
 | -------------------------------------------------------------------- | ----------------------------------------------------------- |
-| ![v1 Dashboard](./client/src/assets/screenshots/v1/Dashboard_v1.png) | ![Dashboard](./client/src/assets/screenshots/Dashboard.png) |
+| ![v1 Dashboard](./client/src/assets/screenshots/V1/Dashboard_v1.png) | ![Dashboard](./client/src/assets/screenshots/Dashboard.png) |
 
 ### Habit Tracker
 
 | v1                                                                   | Current                                                     |
 | -------------------------------------------------------------------- | ----------------------------------------------------------- |
-| ![v1 Habits](./client/src/assets/screenshots/v1/HabitTracker_v1.png) | ![Habits](./client/src/assets/screenshots/HabitTracker.png) |
+| ![v1 Habits](./client/src/assets/screenshots/V1/HabitTracker_v1.png) | ![Habits](./client/src/assets/screenshots/HabitTracker.png) |
 
 ---
 
