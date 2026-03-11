@@ -26,4 +26,18 @@ const getSleep = async (req, res) => {
   }
 };
 
-module.exports = getSleep;
+const getSleepForMonth = async (userId, year, month) => {
+  const user = await Habits.findOne({ userId });
+  if (!user) return [];
+
+  const paddedMonth = String(month).padStart(2, "0");
+
+  const monthData = user.months.find(
+    (m) => Number(m.year) === Number(year) && String(m.month) === paddedMonth,
+  );
+  if (!monthData) return [];
+
+  return monthData.sleep ?? [];
+};
+
+module.exports = { getSleep, getSleepForMonth };

@@ -35,6 +35,12 @@ const SleepDaySchema = new mongoose.Schema({
   hours: { type: Number, default: 0 },
 });
 
+const MoodSchema = new mongoose.Schema({
+  date: { type: String, required: true },
+  rating: { type: Number, min: 1, max: 10, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const MonthDataSchema = new mongoose.Schema({
   year: { type: Number, required: true },
   month: { type: String, required: true },
@@ -43,6 +49,7 @@ const MonthDataSchema = new mongoose.Schema({
   memorable: [HabitDaySchema],
   habits: [HabitSchema],
   sleep: [SleepDaySchema],
+  mood: [MoodSchema],
 });
 
 const HabitsSchema = new mongoose.Schema({

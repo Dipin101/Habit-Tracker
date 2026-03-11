@@ -25,6 +25,10 @@ app.use(
 );
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log("HIT:", req.method, req.path);
+  next();
+});
 // your existing routes
 app.use("/api/users", userRoutes);
 // Connect to DB and only then start server

@@ -23,4 +23,15 @@ const getHabits = async (req, res) => {
   }
 };
 
-module.exports = getHabits;
+const getHabitsForMonth = async (userId, year, month) => {
+  const habitsDoc = await Habits.findOne({ userId });
+  if (!habitsDoc) return [];
+
+  const monthData = habitsDoc.months.find(
+    (m) => m.month === month && String(m.year) === String(year),
+  );
+
+  return monthData?.habits ?? [];
+};
+
+module.exports = { getHabits, getHabitsForMonth };

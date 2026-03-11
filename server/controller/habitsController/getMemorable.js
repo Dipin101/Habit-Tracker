@@ -34,5 +34,16 @@ const getMemorable = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+const getMemorableForMonth = async (userId, year, month) => {
+  const userHabits = await Habits.findOne({ userId });
+  if (!userHabits) return [];
 
-module.exports = getMemorable;
+  const monthData = userHabits.months.find(
+    (m) => Number(m.year) === Number(year) && String(m.month) === String(month),
+  );
+  if (!monthData) return [];
+
+  return monthData.memorable ?? [];
+};
+
+module.exports = { getMemorable, getMemorableForMonth };

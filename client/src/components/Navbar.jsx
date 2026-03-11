@@ -8,11 +8,23 @@ import Loading from "./Loading";
 import { GoHomeFill, GoChecklist } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { IoAnalyticsSharp } from "react-icons/io5";
 
 const NAV_LINKS = [
-  { to: "/dashboard", label: "Dashboard", Icon: GoHomeFill },
-  { to: "/dashboard/profile", label: "Profile", Icon: CgProfile },
-  { to: "/dashboard/habittrack", label: "Habit Tracker", Icon: GoChecklist },
+  { to: "/dashboard", label: "Dashboard", Icon: GoHomeFill, end: true },
+  { to: "/dashboard/profile", label: "Profile", Icon: CgProfile, end: true },
+  {
+    to: "/dashboard/habittrack",
+    label: "Habit Tracker",
+    Icon: GoChecklist,
+    end: true,
+  },
+  {
+    to: "/dashboard/analytics",
+    label: "Analytics",
+    Icon: IoAnalyticsSharp,
+    end: false,
+  },
 ];
 
 const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -74,11 +86,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 style={{ background: "rgba(255,255,255,0.2)" }}
               />
               <div className="flex flex-col items-center gap-2 flex-1">
-                {NAV_LINKS.map(({ to, Icon }) => (
+                {NAV_LINKS.map(({ to, label, Icon, end }) => (
                   <NavLink
                     key={to}
                     to={to}
-                    end
+                    end={end}
                     className={({ isActive }) =>
                       `w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
                         isActive
@@ -126,11 +138,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 </button>
               </div>
               <div className="flex flex-col gap-1 flex-1">
-                {NAV_LINKS.map(({ to, label, Icon }) => (
+                {NAV_LINKS.map(({ to, label, Icon, end }) => (
                   <NavLink
                     key={to}
                     to={to}
-                    end
+                    end={end}
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                         isActive
@@ -183,11 +195,11 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             borderTop: "1px solid rgba(255,255,255,0.15)",
           }}
         >
-          {NAV_LINKS.map(({ to, Icon }) => (
+          {NAV_LINKS.map(({ to, Icon, end }) => (
             <NavLink
               key={to}
               to={to}
-              end
+              end={end}
               className={({ isActive }) =>
                 `w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
                   isActive ? "bg-white/25 text-white" : "text-white/60"

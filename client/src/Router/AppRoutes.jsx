@@ -12,6 +12,7 @@ import Dashboardlayout from "../pages/Dashboard/components/Dashboardlayout";
 import Profile from "../pages/Profile";
 import Settings from "../pages/Settings";
 import Analytics from "../pages/Analytics";
+import AnalyticsMonth from "../pages/AnalyticsMonth";
 
 import Loading from "../components/Loading";
 import { useEffect } from "react";
@@ -53,6 +54,10 @@ const AppRoutes = () => {
           <Route path="settings" element={<Settings />} />
           <Route path="loading" element={<Loading />} />
           <Route path="analytics" element={<Analytics />} />
+          <Route
+            path="analytics/:year/:month/:tab?"
+            element={<AnalyticsMonth />}
+          />
         </Route>
       </Routes>
     </>

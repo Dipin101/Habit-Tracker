@@ -38,7 +38,7 @@
   }
 
   /* ← dark theme variables here */
-  [data-theme="dark"] {
+  /* [data-theme="dark"] {
     --color-background: #0f1923;
     --color-card: #1a2633;
     --color-text: #e8f4f8;
@@ -46,7 +46,7 @@
     --color-accent-pink: #c89fbb;
     --color-accent-pink-dark: #a87d9a;
     --color-accent-green: #93b5a0;
-  }
+  } */
 }
 
 * {

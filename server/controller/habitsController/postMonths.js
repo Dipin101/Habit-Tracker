@@ -23,7 +23,19 @@ const postMonths = async (req, res) => {
     );
 
     if (monthExists) {
-      return res.status(400).json({ message: "Month already exists" });
+      const monthDoc = userHabits.months.find(
+        (m) =>
+          Number(m.year) === Number(year) && String(m.month) === String(month),
+      );
+
+      if (trackSleepModal) {
+        monthDoc.trackSleep = true;
+        monthDoc.sleepTrackingStart =
+          sleepTrackingStart ?? new Date().toISOString();
+      }
+
+      await userHabits.save();
+      return res.status(200).json({ month: monthDoc });
     }
 
     // Add new month

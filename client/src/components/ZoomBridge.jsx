@@ -75,7 +75,7 @@ const HabitCard = ({ card, scrollYProgress }) => {
   );
   const opacity = useTransform(
     scrollYProgress,
-    [0.18, 0.28, 0.75, 0.85],
+    [0.12, 0.18, 0.65, 0.78],
     [0, 1, 1, 0],
   );
   const scale = useTransform(scrollYProgress, [0.2, 0.55], [0.3, 1]);

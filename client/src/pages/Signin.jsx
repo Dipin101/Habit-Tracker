@@ -7,13 +7,31 @@ import { auth } from "../firebase";
 import { fetchFromBackend } from "../api.js";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import Loading from "../components/Loading.jsx";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
+  const [resetMsg, setResetMsg] = useState("");
+  const [resetError, setResetError] = useState("");
+
+  const handleForgotPassword = async () => {
+    const email = document.querySelector('input[type="email"]')?.value;
+    if (!email) {
+      setResetError("Enter your email first then click forgot password.");
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetMsg("Reset link sent! Check your email ✓");
+      setTimeout(() => setResetMsg(""), 4000);
+    } catch (err) {
+      setResetError("Couldn't send reset email. Check your email is correct.");
+      setTimeout(() => setResetError(""), 4000);
+    }
+  };
 
   const {
     register,
@@ -36,7 +54,7 @@ const Signin = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firebaseUid: uid }),
       });
-      console.log("Login successful: ", res.message || res);
+      // console.log("Login successful: ", res.message || res);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -223,14 +241,39 @@ const Signin = () => {
             </motion.p>
           )}
           {/* Forgot password */}
-          {/* <div className="flex justify-end -mt-2">
+          <div className="flex flex-col items-end gap-1 -mt-2">
             <button
               type="button"
+              onClick={handleForgotPassword}
               className="text-xs hover:opacity-70 transition-opacity text-accent-pink"
             >
               Forgot password?
             </button>
-          </div> */}
+
+            {/* success or error message */}
+            <AnimatePresence>
+              {resetMsg && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-xs text-accent-green"
+                >
+                  {resetMsg}
+                </motion.p>
+              )}
+              {resetError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="text-xs text-error"
+                >
+                  {resetError}
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Submit */}
           <motion.button
