@@ -301,6 +301,15 @@ const Homepage = () => {
             >
               Aspiring fullstack developer building tools for real life.
             </p>
+
+            <a
+              href="https://github.com/Dipin101"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs hover:opacity-70 transition-opacity text-accent-pink"
+            >
+              Find me on GitHub →
+            </a>
           </div>
         </div>
 

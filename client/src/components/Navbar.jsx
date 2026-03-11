@@ -125,7 +125,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                   transition={{ duration: 0.2 }}
                   className="text-base font-bold text-white tracking-widest uppercase whitespace-nowrap"
                 >
-                  OneApp
+                  HabitTracker
                 </motion.span>
                 <button
                   onClick={() => setSidebarOpen(false)}
@@ -244,7 +244,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="text-base font-bold uppercase tracking-widest text-text"
           >
-            OneApp
+            HabitTracker
           </Link>
           <div className="hidden md:flex items-center gap-6">
             {[

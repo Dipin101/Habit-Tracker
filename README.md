@@ -6,6 +6,15 @@ A personal full-stack habit tracking app built out of frustration with todo-list
 
 ---
 
+## 🎨 Design Process
+
+The UI was designed in Figma before development — including wireframes,
+a full color system, typography choices, and desktop mockups.
+
+![Design System](./client/src/assets/screenshots/figmadesign.png)
+
+---
+
 ## 💡 Why I Built This
 
 Most habit apps felt like todo lists — check something off today, forget about it tomorrow. I wanted something that:
@@ -114,6 +123,28 @@ Clicking a month opens a **detailed report with 4 tabs:**
 - Typography via **Google Fonts**
 - Animations via **Framer Motion**
 - Charts via **Chart.js**
+
+---
+
+## 📸 Screenshots
+
+### Homepage
+
+| v1                                                                 | Current                                                   |
+| ------------------------------------------------------------------ | --------------------------------------------------------- |
+| ![v1 Homepage](./client/src/assets/screenshots/V1/Homepage_v1.png) | ![Homepage](./client/src/assets/screenshots/Homepage.png) |
+
+### Dashboard
+
+| v1                                                                   | Current                                                     |
+| -------------------------------------------------------------------- | ----------------------------------------------------------- |
+| ![v1 Dashboard](./client/src/assets/screenshots/v1/dashboard_v1.png) | ![Dashboard](./client/src/assets/screenshots/dashboard.png) |
+
+### Habit Tracker
+
+| v1                                                                   | Current                                                     |
+| -------------------------------------------------------------------- | ----------------------------------------------------------- |
+| ![v1 Habits](./client/src/assets/screenshots/v1/habittracker_v1.png) | ![Habits](./client/src/assets/screenshots/habittracker.png) |
 
 ---
 
@@ -358,6 +389,10 @@ App runs at `http://localhost:5173`
 | ------ | -------------------------- | --------------------- |
 | GET    | `/api/users/getProfile`    | Get user profile      |
 | PATCH  | `/api/users/updateProfile` | Update name and phone |
+
+---
+
+## 🗺 Roadmap
 
 ---
 
