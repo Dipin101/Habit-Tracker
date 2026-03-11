@@ -138,13 +138,13 @@ Clicking a month opens a **detailed report with 4 tabs:**
 
 | v1                                                                   | Current                                                     |
 | -------------------------------------------------------------------- | ----------------------------------------------------------- |
-| ![v1 Dashboard](./client/src/assets/screenshots/v1/dashboard_v1.png) | ![Dashboard](./client/src/assets/screenshots/dashboard.png) |
+| ![v1 Dashboard](./client/src/assets/screenshots/v1/Dashboard_v1.png) | ![Dashboard](./client/src/assets/screenshots/Dashboard.png) |
 
 ### Habit Tracker
 
 | v1                                                                   | Current                                                     |
 | -------------------------------------------------------------------- | ----------------------------------------------------------- |
-| ![v1 Habits](./client/src/assets/screenshots/v1/habittracker_v1.png) | ![Habits](./client/src/assets/screenshots/habittracker.png) |
+| ![v1 Habits](./client/src/assets/screenshots/v1/HabitTracker_v1.png) | ![Habits](./client/src/assets/screenshots/HabitTracker.png) |
 
 ---
 
@@ -392,7 +392,17 @@ App runs at `http://localhost:5173`
 
 ---
 
+## 🧪 Testing
+
+- API endpoints were manually tested using **Postman** throughout development.
+- Unit and integration tests with Jest + Supertest are planned — see Roadmap.
+
+---
+
 ## 🗺 Roadmap
+
+- [ ] Add unit and integration tests (Jest + Supertest)
+- [ ] Pomodoro timer for focused habit work sessions
 
 ---
 
