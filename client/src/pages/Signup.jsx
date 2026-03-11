@@ -81,7 +81,6 @@ const Signup = () => {
     }
   };
 
-  // rgba values stay as style — Tailwind can't handle opacity variants cleanly
   const inputStyle = {
     background: "rgba(255,255,255,0.6)",
     border: "1px solid rgba(0,0,0,0.08)",
@@ -103,7 +102,6 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6 py-16 relative overflow-hidden">
-      {/* Background glows — rgba stays as style */}
       <div
         className="fixed top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background: "rgba(244,162,97,0.15)", filter: "blur(80px)" }}
@@ -124,13 +122,11 @@ const Signup = () => {
           border: "1px solid rgba(255,255,255,0.6)",
         }}
       >
-        {/* Top glow */}
         <div
           className="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-16 rounded-full pointer-events-none"
           style={{ background: "rgba(200,159,187,0.2)", filter: "blur(40px)" }}
         />
 
-        {/* Header */}
         <div className="flex flex-col items-center gap-2 text-center">
           <span
             className="px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-[0.25em] text-sub-text"
@@ -149,7 +145,6 @@ const Signup = () => {
           </p>
         </div>
 
-        {/* Divider */}
         <div className="flex items-center gap-3">
           <div
             className="flex-1 h-px"
@@ -162,9 +157,7 @@ const Signup = () => {
           />
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {/* First + Last name row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <InputField
               label="First Name"
@@ -196,7 +189,6 @@ const Signup = () => {
             </InputField>
           </div>
 
-          {/* Email */}
           <InputField label="Email" error={errors.email?.message}>
             <input
               type="email"
@@ -216,7 +208,6 @@ const Signup = () => {
             />
           </InputField>
 
-          {/* Phone */}
           <InputField label="Phone" error={errors.phone?.message}>
             <input
               type="text"
@@ -239,7 +230,6 @@ const Signup = () => {
             />
           </InputField>
 
-          {/* Password */}
           <InputField label="Password" error={errors.password?.message}>
             <div className="relative">
               <input
@@ -304,7 +294,6 @@ const Signup = () => {
             </motion.p>
           )}
 
-          {/* Buttons */}
           <div className="flex flex-col gap-3 mt-2">
             <motion.button
               type="submit"
@@ -371,7 +360,6 @@ const Signup = () => {
           </div>
         </form>
 
-        {/* Signin redirect */}
         <p className="text-center text-xs text-sub-text">
           Already have an account?{" "}
           <Link
@@ -382,7 +370,6 @@ const Signup = () => {
           </Link>
         </p>
 
-        {/* Back to home */}
         <Link
           to="/"
           className="text-center text-xs hover:opacity-70 transition-opacity text-sub-text"

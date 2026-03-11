@@ -6,7 +6,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
   const [chart, setChart] = useState("trend");
   const [enabling, setEnabling] = useState(false);
 
-  // ── empty state ──
   if (!data || data.length === 0) {
     return (
       <motion.div
@@ -21,7 +20,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
         <span style={{ fontSize: "36px", opacity: 0.3 }}>🌙</span>
 
         {trackSleepEnabled ? (
-          // enabled but no data yet
           <>
             <p style={{ color: "#5a7a8f", fontSize: "13px", fontWeight: 600 }}>
               Sleep tracking is on
@@ -38,7 +36,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
             </p>
           </>
         ) : (
-          // not enabled yet
           <>
             <p style={{ color: "#5a7a8f", fontSize: "13px", fontWeight: 600 }}>
               Sleep tracking is off
@@ -81,17 +78,14 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
     );
   }
 
-  // ── consistency warning ──
   const trackingPct = data.length / daysInMonth;
   const isInconsistent = trackingPct < 0.5;
 
-  // ── stats ──
   const avg = (data.reduce((s, d) => s + d.hours, 0) / data.length).toFixed(1);
   const best = data.reduce((b, d) => (d.hours > b.hours ? d : b), data[0]);
   const worst = data.reduce((w, d) => (d.hours < w.hours ? d : w), data[0]);
   const goalDays = data.filter((d) => d.hours >= 7).length;
 
-  // ── dynamic weeks ──
   const weeks = [];
   let weekStart = 1;
   let weekNum = 1;
@@ -186,7 +180,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
           ))}
         </svg>
 
-        {/* day labels */}
         <div className="flex justify-between mt-2 px-0.5">
           {data.map((d) => (
             <span
@@ -203,7 +196,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
           ))}
         </div>
 
-        {/* legend */}
         <div className="flex items-center gap-4 mt-2">
           <div className="flex items-center gap-1.5">
             <div style={{ width: "14px", borderTop: "1.5px dashed #C89FBB" }} />
@@ -303,7 +295,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
               ? { bg: "#C89FBB", t: "#fff" }
               : { bg: "rgba(232,128,128,0.5)", t: "#c05050" };
 
-    // build full month grid including untracked days
     const dayMap = new Map(data.map((d) => [d.day, d.hours]));
 
     return (
@@ -366,7 +357,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
       transition={{ duration: 0.3 }}
       className="flex flex-col gap-6"
     >
-      {/* inconsistency warning */}
       {isInconsistent && (
         <div
           className="rounded-xl px-4 py-2 flex items-center gap-2"
@@ -383,7 +373,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
         </div>
       )}
 
-      {/* stat cards */}
       <div className="grid grid-cols-4 gap-2">
         <StatCard label="Average" value={`${avg}h`} />
         <StatCard
@@ -403,7 +392,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
         />
       </div>
 
-      {/* charts */}
       <div
         className="rounded-2xl p-4"
         style={{
@@ -490,7 +478,6 @@ const SleepTab = ({ data, daysInMonth, trackSleepEnabled, onEnableSleep }) => {
         </AnimatePresence>
       </div>
 
-      {/* weekly breakdown */}
       <div className="flex flex-col gap-2">
         <span
           style={{

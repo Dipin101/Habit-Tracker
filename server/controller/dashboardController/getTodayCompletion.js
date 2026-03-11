@@ -4,7 +4,6 @@ const Habits = require("../../models/Habits");
 const getTodayCompletion = async (req, res) => {
   try {
     const { userId } = req.body;
-    // console.log(userId);
     const today = DateTime.now().setZone("America/Toronto");
     const month = String(today.month).padStart(2, "0");
     const year = today.year;
@@ -18,7 +17,6 @@ const getTodayCompletion = async (req, res) => {
     if (!monthData || !monthData.habits) return res.json({ habits: [] });
 
     const todayHabits = monthData.habits.map((habit) => {
-      // find today's status by matching ISO date string
       const todayStatusObj = habit.status.find(
         (s) => s.date === today.toISODate(),
       );
@@ -28,7 +26,6 @@ const getTodayCompletion = async (req, res) => {
         status: todayStatusObj ? todayStatusObj.status : "in progress",
       };
     });
-    // console.log("habits", todayHabits);
     res.json({ habits: todayHabits });
   } catch (err) {
     console.error(err);

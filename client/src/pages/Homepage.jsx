@@ -29,9 +29,7 @@ const Homepage = () => {
     <div className="bg-background">
       <Navbar />
 
-      {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24 py-12 overflow-hidden">
-        {/* Blobs — accent palette */}
         <div
           className="absolute top-20 -left-6 md:-left-20 w-40 md:w-72 h-40 md:h-72 rounded-full blur-3xl opacity-20 pointer-events-none"
           style={{ background: "#C89FBB" }}
@@ -87,7 +85,6 @@ const Homepage = () => {
             </div>
 
             <div className="flex flex-col gap-4 items-center justify-center md:flex-row">
-              {/* Start Tracking */}
               <Link to="/signup">
                 <motion.button
                   className="px-6 py-4 rounded-full text-white uppercase font-bold text-sm tracking-wide"
@@ -104,7 +101,6 @@ const Homepage = () => {
                 </motion.button>
               </Link>
 
-              {/* View Demo */}
               <Link to="/#">
                 <motion.button
                   className="px-6 py-4 rounded-full bg-transparent text-sm font-medium"
@@ -123,7 +119,6 @@ const Homepage = () => {
             </div>
           </motion.div>
 
-          {/* Hero image */}
           <motion.img
             className="hidden md:block md:max-w-[280px] lg:max-w-md xl:max-w-lg h-auto"
             src={heroImage}
@@ -143,7 +138,6 @@ const Homepage = () => {
           />
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           initial={{ opacity: 0 }}
@@ -174,13 +168,11 @@ const Homepage = () => {
         }}
       />
 
-      {/* About section */}
       <section
         id="about"
         className="bg-background px-6 md:px-16 lg:px-24 py-24"
       >
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
-          {/* Left — label */}
           <div className="flex flex-col gap-3 md:w-1/3">
             <p
               className="text-xs uppercase tracking-[0.3em] font-medium"
@@ -202,7 +194,6 @@ const Homepage = () => {
             </p>
           </div>
 
-          {/* Right — card */}
           <div
             className="md:w-2/3 flex flex-col gap-6 px-8 py-10 rounded-3xl"
             style={{
@@ -256,7 +247,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer
         className="bg-background border-t px-6 md:px-16 py-12"
         style={{ borderColor: "rgba(0,0,0,0.08)" }}

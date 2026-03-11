@@ -62,7 +62,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
   if (isDashboard && user) {
     return (
       <>
-        {/* SIDEBAR — desktop only */}
         <motion.div
           animate={{ width: sidebarOpen ? 240 : 68 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -72,7 +71,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             borderRight: "1px solid rgba(255,255,255,0.15)",
           }}
         >
-          {/* Collapsed */}
           {!sidebarOpen && (
             <div className="flex flex-col items-center py-6 gap-4 h-full">
               <button
@@ -118,7 +116,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
             </div>
           )}
 
-          {/* Expanded */}
           {sidebarOpen && (
             <div className="flex flex-col p-4 h-full">
               <div className="flex items-center justify-between mb-8 h-8">
@@ -187,7 +184,6 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
           )}
         </motion.div>
 
-        {/* BOTTOM TAB BAR — mobile only */}
         <div
           className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around px-4 py-2"
           style={{

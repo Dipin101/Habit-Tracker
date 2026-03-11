@@ -8,7 +8,6 @@ const getSleep = async (req, res) => {
     if (!user) return res.status(404).json({ message: "Not found user" });
 
     const paddedMonth = String(month).padStart(2, "0");
-    //check month exists or not
     const monthData = user.months.find(
       (m) => Number(m.year) === Number(year) && String(m.month) === paddedMonth,
     );

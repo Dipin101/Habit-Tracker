@@ -1,14 +1,11 @@
-// server.js
 const dotenv = require("dotenv");
-dotenv.config(); // <-- must be first
+dotenv.config();
 
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const connectDB = require("./controller/database/db");
 const userRoutes = require("./routes/users");
-// const session = require("express-session");
-// const authRoutes = require("./routes/auth"); // Google auth routes
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,10 +14,10 @@ dotenv.config();
 app.use(
   cors({
     origin: [
-      "https://habit-tracker-three-ivory.vercel.app", //for render
-      "http://localhost:5173", //for local
+      "https://habit-tracker-three-ivory.vercel.app",
+      "http://localhost:5173",
     ],
-    credentials: true, // allow cookies
+    credentials: true,
   }),
 );
 app.use(express.json());
@@ -29,12 +26,12 @@ app.use((req, res, next) => {
   console.log("HIT:", req.method, req.path);
   next();
 });
-// your existing routes
+
 app.use("/api/users", userRoutes);
-// Connect to DB and only then start server
+
 const startServer = async () => {
   try {
-    await connectDB(); // wait until DB is connected
+    await connectDB();
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
     });

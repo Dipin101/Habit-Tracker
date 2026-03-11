@@ -8,7 +8,6 @@ const getUser = async (req, res) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    // console.log("firebase", firebaseUid);
     const decoded = await admin.auth().verifyIdToken(token);
     const uid = decoded.uid;
     const user = await User.findOne({ firebaseUid: uid });

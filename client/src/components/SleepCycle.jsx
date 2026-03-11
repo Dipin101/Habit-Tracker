@@ -220,7 +220,6 @@ const SleepCycle = ({ startDate }) => {
         boxSizing: "border-box",
       }}
     >
-      {/* Header */}
       <div className="flex flex-col gap-1">
         <p className="text-xs uppercase tracking-widest font-medium text-accent-green">
           Sleep Cycle
@@ -233,7 +232,6 @@ const SleepCycle = ({ startDate }) => {
         </p>
       </div>
 
-      {/* Error message */}
       <AnimatePresence>
         {errorMessage && (
           <motion.p
@@ -248,22 +246,19 @@ const SleepCycle = ({ startDate }) => {
         )}
       </AnimatePresence>
 
-      {/* Chart card */}
       <div
         className="w-full rounded-2xl p-4 md:p-8"
         style={{
           background: "rgba(255,255,255,0.5)",
           border: "1px solid rgba(255,255,255,0.7)",
           boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
-          overflow: "hidden", // ← hard clips chart, nothing escapes this card
+          overflow: "hidden",
         }}
       >
-        {/* Scroll hint — mobile only */}
         <p className="text-xs text-sub-text mb-3 md:hidden">
           ← Scroll to view full chart →
         </p>
 
-        {/* Scrollable wrapper — only the chart scrolls */}
         <div
           style={{
             overflowX: "auto",
@@ -271,7 +266,6 @@ const SleepCycle = ({ startDate }) => {
             WebkitOverflowScrolling: "touch",
           }}
         >
-          {/* Fixed min-width so chart stays readable, height fixed */}
           <div style={{ minWidth: "560px", height: "500px" }}>
             <Line
               ref={chartRef}
@@ -283,7 +277,6 @@ const SleepCycle = ({ startDate }) => {
         </div>
       </div>
 
-      {/* Legend — flex-col on mobile, row on desktop */}
       <div className="flex flex-col md:flex-row md:flex-wrap gap-2 w-full">
         {legend.map(({ color, label, sub }) => (
           <div

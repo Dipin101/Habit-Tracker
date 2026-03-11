@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 const Profile = () => {
   const [userData, setUserData] = useState({});
-  const [editField, setEditField] = useState(null); // which field is being edited
+  const [editField, setEditField] = useState(null);
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState(false);
 
@@ -37,7 +37,6 @@ const Profile = () => {
 
   const openEdit = (field, currentValue) => {
     setEditField(field);
-    // pre-fill the form with current value
     reset({ [field]: currentValue || "" });
   };
 
@@ -55,11 +54,9 @@ const Profile = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firebaseUid: user.uid,
-          // only send the field being edited
           [editField]: data[editField],
         }),
       });
-      // update local state so UI reflects change immediately
       setUserData((prev) => ({ ...prev, [editField]: data[editField] }));
       setSavedMsg(true);
       setTimeout(() => setSavedMsg(false), 2000);
@@ -77,13 +74,12 @@ const Profile = () => {
   const fields = [
     { label: "First Name", key: "firstName", value: userData.firstName },
     { label: "Last Name", key: "lastName", value: userData.lastName },
-    { label: "Email", key: "email", value: userData.email, disabled: true }, // email shouldn't be editable easily
+    { label: "Email", key: "email", value: userData.email, disabled: true },
     { label: "Phone", key: "phone", value: userData.phone },
   ];
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6 py-16 relative overflow-hidden">
-      {/* Background blobs */}
       <div
         className="fixed top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background: "rgba(200,159,187,0.15)", filter: "blur(80px)" }}
@@ -109,7 +105,6 @@ const Profile = () => {
           style={{ background: "rgba(200,159,187,0.2)", filter: "blur(40px)" }}
         />
 
-        {/* Avatar + name */}
         <div className="flex flex-col items-center gap-3">
           <motion.div
             initial={{ scale: 0 }}
@@ -137,7 +132,6 @@ const Profile = () => {
             </span>
           </div>
 
-          {/* Saved confirmation */}
           <AnimatePresence>
             {savedMsg && (
               <motion.span
@@ -164,7 +158,6 @@ const Profile = () => {
           />
         </div>
 
-        {/* Fields */}
         <div className="flex flex-col gap-3">
           {fields.map(({ label, key, value, disabled }, i) => (
             <motion.div
@@ -204,11 +197,9 @@ const Profile = () => {
         </div>
       </motion.div>
 
-      {/* Modal */}
       <AnimatePresence>
         {editField && (
           <>
-            {/* Backdrop */}
             <motion.div
               className="fixed inset-0 z-40"
               style={{
@@ -221,7 +212,6 @@ const Profile = () => {
               onClick={closeModal}
             />
 
-            {/* Modal box */}
             <motion.div
               className="fixed z-50 w-full max-w-sm mx-auto left-0 right-0 top-1/2 -translate-y-1/2 px-4"
               initial={{ opacity: 0, scale: 0.9, y: "-40%" }}
@@ -236,7 +226,6 @@ const Profile = () => {
                   border: "1px solid rgba(255,255,255,0.6)",
                 }}
               >
-                {/* Modal header */}
                 <div className="flex items-center justify-between">
                   <h3 className="text-base font-bold text-text capitalize">
                     Edit {editField.replace(/([A-Z])/g, " $1")}
@@ -249,7 +238,6 @@ const Profile = () => {
                   </button>
                 </div>
 
-                {/* Form */}
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-4"
@@ -279,7 +267,6 @@ const Profile = () => {
                     )}
                   </div>
 
-                  {/* Buttons */}
                   <div className="flex gap-3">
                     <button
                       type="button"

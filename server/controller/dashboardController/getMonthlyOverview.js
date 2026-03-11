@@ -19,7 +19,6 @@ const getMonthlyOverview = async (req, res) => {
 
     const totalHabits = monthData.habits.length;
 
-    // Count all statuses across all habits
     let totalStatuses = 0;
     let completedStatuses = 0;
 

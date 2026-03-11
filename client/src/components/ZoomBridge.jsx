@@ -146,7 +146,6 @@ const ZoomBridge = () => {
   return (
     <section ref={ref} className="relative h-[600vh] bg-background">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Red glow */}
         <motion.div
           style={{
             opacity: glowOpacity,
@@ -155,8 +154,8 @@ const ZoomBridge = () => {
             left: "50%",
             x: "-50%",
             y: "-50%",
-            width: "min(900px, 100vw)", // ← fixed
-            height: "min(900px, 100vw)", // ← fixed
+            width: "min(900px, 100vw)",
+            height: "min(900px, 100vw)",
             borderRadius: "50%",
             background:
               "radial-gradient(circle, rgba(239,68,68,0.5) 0%, rgba(239,68,68,0.5) 50%, transparent 70%)",
@@ -165,7 +164,6 @@ const ZoomBridge = () => {
           }}
         />
 
-        {/* Brain */}
         <motion.div
           style={{
             opacity: brainOpacity,
@@ -185,12 +183,10 @@ const ZoomBridge = () => {
           />
         </motion.div>
 
-        {/* Habit Cards */}
         {habitCards.map((card, i) => (
           <HabitCard key={i} card={card} scrollYProgress={scrollYProgress} />
         ))}
 
-        {/* Clarity Card */}
         <motion.div
           style={{
             opacity: clarityOpacity,
@@ -201,7 +197,7 @@ const ZoomBridge = () => {
           className="absolute inset-0 flex items-center justify-center pointer-events-none px-4 md:px-8"
         >
           <div
-            className="relative flex flex-col items-center gap-4 md:gap-7 px-6 py-10 md:px-16 md:py-16 rounded-2xl md:rounded-3xl text-center w-full" // ← fixed
+            className="relative flex flex-col items-center gap-4 md:gap-7 px-6 py-10 md:px-16 md:py-16 rounded-2xl md:rounded-3xl text-center w-full"
             style={{
               maxWidth: "860px",
               background:
@@ -212,7 +208,6 @@ const ZoomBridge = () => {
               backdropFilter: "blur(40px)",
             }}
           >
-            {/* Top glow */}
             <div
               className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-24 rounded-full pointer-events-none"
               style={{
@@ -221,7 +216,6 @@ const ZoomBridge = () => {
               }}
             />
 
-            {/* Eyebrow */}
             <span
               className="px-4 py-1.5 md:px-5 md:py-2 rounded-full text-xs font-medium uppercase tracking-[0.25em]"
               style={{
@@ -233,7 +227,6 @@ const ZoomBridge = () => {
               Start your journey
             </span>
 
-            {/* Title */}
             <div className="flex flex-col gap-2 md:gap-3">
               <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight leading-tight text-white uppercase">
                 Habit Tracker
@@ -246,7 +239,6 @@ const ZoomBridge = () => {
               </p>
             </div>
 
-            {/* Divider */}
             <div className="flex items-center gap-3 w-full px-2 md:px-4">
               <div
                 className="flex-1 h-px"
@@ -262,7 +254,6 @@ const ZoomBridge = () => {
               />
             </div>
 
-            {/* Description */}
             <p
               className="text-sm md:text-lg lg:text-xl leading-relaxed max-w-2xl"
               style={{ color: "rgba(255,255,255,0.85)" }}
@@ -274,7 +265,6 @@ const ZoomBridge = () => {
               </span>
             </p>
 
-            {/* Scroll hint */}
             <motion.div
               className="flex flex-col items-center gap-2 mt-2"
               animate={{ opacity: [0.4, 1, 0.4] }}
@@ -306,7 +296,6 @@ const ZoomBridge = () => {
               </motion.div>
             </motion.div>
 
-            {/* Bottom glow */}
             <div
               className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-64 h-16 rounded-full pointer-events-none"
               style={{
@@ -317,7 +306,6 @@ const ZoomBridge = () => {
           </div>
         </motion.div>
 
-        {/* Dark overlay */}
         <motion.div
           style={{
             opacity: overlayOpacity,

@@ -51,7 +51,6 @@ const MoodTab = ({
 }) => {
   const [view, setView] = useState("calendar");
 
-  // ── empty state ──
   if (!moodData || moodData.length === 0) {
     return (
       <motion.div
@@ -71,12 +70,10 @@ const MoodTab = ({
     );
   }
 
-  // ── build a day-keyed map for fast lookup ──
   const moodByDay = new Map(moodData.map((d) => [d.day, d]));
   const sleepByDay = new Map(sleepData.map((d) => [d.day, d]));
   const memorableByDay = new Map(memorableData.map((d) => [d.day, d]));
 
-  // ── stats ──
   const avgMood = (
     moodData.reduce((s, d) => s + d.score, 0) / moodData.length
   ).toFixed(1);
@@ -94,7 +91,6 @@ const MoodTab = ({
     count: moodData.filter((d) => d.score === s).length,
   }));
 
-  // ── Calendar view ──
   const CalendarView = () => {
     const [selected, setSelected] = useState(null);
 
@@ -110,7 +106,6 @@ const MoodTab = ({
 
     return (
       <div className="flex flex-col gap-4">
-        {/* Calendar grid */}
         <div
           className="rounded-2xl p-4"
           style={{
@@ -160,7 +155,6 @@ const MoodTab = ({
                     minHeight: "48px",
                   }}
                 >
-                  {/* Day number - top left */}
                   <span
                     style={{
                       position: "absolute",
@@ -176,11 +170,9 @@ const MoodTab = ({
 
                   {cfg ? (
                     <>
-                      {/* Emoji - center */}
                       <span style={{ fontSize: "20px", lineHeight: 1 }}>
                         {cfg.emoji}
                       </span>
-                      {/* Journal - bottom right */}
                       {hasMemo && (
                         <span
                           style={{
@@ -214,7 +206,6 @@ const MoodTab = ({
           </div>
         </div>
 
-        {/* Day detail panel */}
         <AnimatePresence>
           {selected && selMood && (
             <motion.div
@@ -347,7 +338,6 @@ const MoodTab = ({
           )}
         </AnimatePresence>
 
-        {/* Mood breakdown */}
         <div className="flex flex-col gap-2">
           <span
             style={{
@@ -434,7 +424,6 @@ const MoodTab = ({
     );
   };
 
-  // ── Correlation view ──
   const CorrelationView = () => {
     const avgMoodForDays = (days) => {
       const scores = days

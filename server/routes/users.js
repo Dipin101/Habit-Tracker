@@ -30,13 +30,8 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/signin", signin);
 router.post("/googleauth", googleAuth);
-
-// Get user by firebaseUid
 router.post("/getUser", getUser);
-//Get user data from mongo through firebaseUID
 router.post("/getProfile", getProfile);
-
-//For habits
 router.post("/months", postMonths);
 router.get("/months/:userId/:year/:month", getMonth);
 router.post("/memorable", createMemorable);
@@ -45,25 +40,15 @@ router.post("/habits", postHabits);
 router.get("/habits/:userId", getHabits);
 router.post("/sleep/", postSleep);
 router.get("/sleep/:userId/:year/:month", getSleep);
-
-//fetching a quote
 router.get("/quote", getQuote);
-//fetching streak
 router.post("/streak", postStreak);
-//calculating completion
 router.post("/today-completion", getTodayCompletion);
 router.get("/avgsleep/:userId/:year/:month", getAvgSleep);
-//monthly overview
 router.post("/monthly-overview", getMonthlyOverview);
-//mood controller
 router.post("/mood-today", getTodayMood);
 router.post("/mood-save", saveTodayMood);
-//update profile
 router.patch("/updateProfile", updateProfile);
-//getting monthsSummary
 router.get("/months-summary/:userId/:year", getMonthsSummary);
-
-// one  route to handle all 4 habits, sleep, moods, memorable
 router.get("/analytics/:userId/:year/:month", getMonthAnalytics);
 
 module.exports = router;

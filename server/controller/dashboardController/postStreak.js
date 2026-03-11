@@ -16,16 +16,15 @@ const postStreak = async (req, res) => {
     let newStreak = 0;
 
     if (!lastLogin) {
-      // first login
       newStreak = 0;
     } else {
       const yesterday = DateTime.fromISO(today).minus({ days: 1 }).toISODate();
       if (lastLogin === todayDate) {
-        newStreak = user.streak; //Already logged today
+        newStreak = user.streak;
       } else if (lastLogin === yesterday) {
-        newStreak = user.streak + 1; //-> consecutive day
+        newStreak = user.streak + 1;
       } else {
-        newStreak = 0; //--missed day
+        newStreak = 0;
       }
     }
 

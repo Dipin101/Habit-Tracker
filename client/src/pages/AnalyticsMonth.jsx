@@ -124,7 +124,6 @@ const AnalyticsMonth = () => {
       1: { emoji: "😞", label: "Awful", color: "#e88080" },
     };
 
-    // ── stats ──
     const habitPct = habits.length
       ? Math.round(
           (habits.reduce((s, h) => s + h.completedDays.length, 0) /
@@ -155,7 +154,6 @@ const AnalyticsMonth = () => {
         )
       : null;
 
-    // ── habit grid ──
     const habitGrid = habits
       .map((h) => {
         const pct = Math.round((h.completedDays.length / daysInMonth) * 100);
@@ -176,7 +174,6 @@ const AnalyticsMonth = () => {
       })
       .join("");
 
-    // ── sleep bars ──
     const sleepBars = sleep.length
       ? sleep
           .map((d) => {
@@ -201,7 +198,6 @@ const AnalyticsMonth = () => {
           .join("")
       : `<p style="color:#aaa;font-size:12px;font-style:italic;">No sleep data recorded</p>`;
 
-    // ── mood dots ──
     const moodDots = [...Array(daysInMonth)]
       .map((_, i) => {
         const day = i + 1;
@@ -214,7 +210,6 @@ const AnalyticsMonth = () => {
       })
       .join("");
 
-    // ── mood legend ──
     const moodLegend = Object.entries(MOOD_CONFIG)
       .reverse()
       .map(
@@ -226,7 +221,6 @@ const AnalyticsMonth = () => {
       )
       .join("");
 
-    // ── memorable entries ──
     const memorableEntries = memorable.length
       ? memorable
           .map(
@@ -405,7 +399,6 @@ const AnalyticsMonth = () => {
       style={{ background: "#ebf5fa" }}
     >
       <div className="max-w-3xl mx-auto flex flex-col gap-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -438,7 +431,6 @@ const AnalyticsMonth = () => {
             </div>
           </div>
 
-          {/* Export button */}
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -466,7 +458,6 @@ const AnalyticsMonth = () => {
           </motion.button>
         </motion.div>
 
-        {/* Tab bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -500,7 +491,6 @@ const AnalyticsMonth = () => {
           ))}
         </motion.div>
 
-        {/* Tab content */}
         <AnimatePresence mode="wait">
           {activeTab === "habits" && (
             <HabitsTab

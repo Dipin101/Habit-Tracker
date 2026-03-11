@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 const Loading = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center">
-      {/* Background glows */}
       <div
         className="fixed top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background: "rgba(244,162,97,0.15)", filter: "blur(80px)" }}
@@ -20,14 +19,12 @@ const Loading = () => {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center gap-6"
       >
-        {/* Spinner */}
         <div className="relative w-14 h-14">
-          {/* outer ring */}
           <div
             className="absolute inset-0 rounded-full"
             style={{ border: "2px solid rgba(147,181,160,0.15)" }}
           />
-          {/* spinning arc */}
+
           <motion.div
             className="absolute inset-0 rounded-full"
             style={{
@@ -38,7 +35,7 @@ const Loading = () => {
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
-          {/* center dot */}
+
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
               className="w-2 h-2 rounded-full bg-accent-pink"
@@ -48,7 +45,6 @@ const Loading = () => {
           </div>
         </div>
 
-        {/* Text */}
         <div className="flex flex-col items-center gap-1.5">
           <motion.p
             className="text-sm font-medium uppercase tracking-[0.3em] text-text"
@@ -60,7 +56,6 @@ const Loading = () => {
           <p className="text-xs text-sub-text">Just a moment...</p>
         </div>
 
-        {/* Animated dots */}
         <div className="flex gap-2">
           {[0, 1, 2].map((i) => (
             <motion.div

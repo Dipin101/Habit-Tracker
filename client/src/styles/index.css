@@ -19,7 +19,6 @@
   --shadow-cta: 5px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* ← dark mode overrides OUTSIDE @theme */
 @layer base {
   html,
   body {
@@ -36,17 +35,6 @@
   body {
     overflow-x: clip;
   }
-
-  /* ← dark theme variables here */
-  /* [data-theme="dark"] {
-    --color-background: #0f1923;
-    --color-card: #1a2633;
-    --color-text: #e8f4f8;
-    --color-sub-text: #7a9db0;
-    --color-accent-pink: #c89fbb;
-    --color-accent-pink-dark: #a87d9a;
-    --color-accent-green: #93b5a0;
-  } */
 }
 
 * {

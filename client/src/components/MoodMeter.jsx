@@ -17,7 +17,6 @@ const MOODS = [
   { rating: 10, emoji: "🤩", label: "Perfect" },
 ];
 
-// color goes from red → orange → green
 const getMoodColor = (rating) => {
   if (rating <= 3) return "#e07070";
   if (rating <= 5) return "#F4A261";
@@ -62,7 +61,6 @@ const MoodMeter = () => {
   const display = hovered || rating;
   const mood = MOODS.find((m) => m.rating === display);
 
-  // speedometer arc math
   const size = 160;
   const cx = size / 2;
   const cy = size / 2 + 10;
@@ -104,13 +102,11 @@ const MoodMeter = () => {
       </div>
 
       <div className="flex flex-col items-center gap-2">
-        {/* Speedometer SVG */}
         <svg
           width={size}
           height={size * 0.75}
           viewBox={`0 0 ${size} ${size * 0.75}`}
         >
-          {/* Background arc */}
           <path
             d={arcPath(startAngle, endAngle)}
             fill="none"
@@ -118,7 +114,7 @@ const MoodMeter = () => {
             strokeWidth="8"
             strokeLinecap="round"
           />
-          {/* Filled arc */}
+
           {display && (
             <motion.path
               d={arcPath(startAngle, needleAngle)}
@@ -131,7 +127,6 @@ const MoodMeter = () => {
               transition={{ duration: 0.4, ease: "easeOut" }}
             />
           )}
-          {/* Needle */}
           {display && (
             <motion.line
               x1={cx}
@@ -145,7 +140,7 @@ const MoodMeter = () => {
               animate={{ opacity: 1 }}
             />
           )}
-          {/* Center dot */}
+
           <circle
             cx={cx}
             cy={cy}
@@ -153,7 +148,6 @@ const MoodMeter = () => {
             fill={display ? getMoodColor(display) : "rgba(0,0,0,0.1)"}
           />
 
-          {/* Emoji + label in center */}
           {mood && (
             <>
               <text x={cx} y={cy - 18} textAnchor="middle" fontSize="20">
@@ -173,7 +167,6 @@ const MoodMeter = () => {
           )}
         </svg>
 
-        {/* Rating buttons */}
         <div className="flex gap-1.5 flex-wrap justify-center">
           {MOODS.map((m) => (
             <motion.button

@@ -6,8 +6,6 @@ const register = async (req, res) => {
 
     console.log(phone);
     const phoneNumber = Number(phone);
-
-    //checking if the user already exists in MongoDB
     const existingUser = await User.findOne({ firebaseUid });
     if (existingUser) {
       console.log("User already exists");
@@ -23,7 +21,6 @@ const register = async (req, res) => {
       });
     }
 
-    //store in MongoDb
     const newUser = new User({
       firstName,
       lastName,
@@ -33,7 +30,7 @@ const register = async (req, res) => {
     });
 
     console.log("saving user to mongoDB", newUser);
-    await newUser.save(); // saves user in MongoDB
+    await newUser.save();
 
     res.status(201).json({
       message: "User created successfully",

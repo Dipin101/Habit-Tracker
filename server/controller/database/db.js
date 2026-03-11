@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// require("dotenv").config();
 
 const connectDB = async () => {
   let mongoURI;
@@ -7,10 +6,8 @@ const connectDB = async () => {
 
   try {
     if (process.env.NODE_ENV === "production" && process.env.MONGO_URI) {
-      // Use Atlas in production
       mongoURI = process.env.MONGO_URI;
     } else {
-      // Use local MongoDB in development or if Atlas URI is missing
       mongoURI = "mongodb://localhost:27017/oneapp";
     }
 
@@ -20,7 +17,7 @@ const connectDB = async () => {
       dbName,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // fail fast if connection is bad
+      serverSelectionTimeoutMS: 5000,
     });
 
     console.log("MongoDB connected successfully");
@@ -31,7 +28,6 @@ const connectDB = async () => {
       "\nFalling back to local MongoDB...",
     );
 
-    // fallback to local if Atlas fails
     if (!mongoURI.includes("localhost")) {
       try {
         await mongoose.connect("mongodb://localhost:27017/oneapp", {

@@ -37,7 +37,6 @@ const FEATURES = [
   },
 ];
 
-// One feature slide
 const FeatureSlide = ({ feature, isActive }) => {
   return (
     <motion.div
@@ -47,7 +46,6 @@ const FeatureSlide = ({ feature, isActive }) => {
       className="absolute inset-0 flex items-center justify-center px-8 md:px-20 pointer-events-none"
     >
       <div className="flex flex-col md:flex-row items-center gap-16 max-w-5xl w-full">
-        {/* Image / illustration panel */}
         <div
           className="relative flex-shrink-0 w-56 h-96 rounded-[2.5rem] border flex flex-col items-center justify-center gap-6 overflow-hidden"
           style={{
@@ -55,7 +53,6 @@ const FeatureSlide = ({ feature, isActive }) => {
             borderColor: `${feature.accent}33`,
           }}
         >
-          {/* top glow */}
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full blur-3xl opacity-25"
             style={{ background: feature.accent }}
@@ -67,7 +64,6 @@ const FeatureSlide = ({ feature, isActive }) => {
             className="w-24 h-24 object-contain relative z-10 select-none"
           />
 
-          {/* animated bars */}
           <div className="flex flex-col gap-2 w-32 relative z-10">
             {feature.bars.map((w, i) => (
               <div
@@ -89,7 +85,6 @@ const FeatureSlide = ({ feature, isActive }) => {
             ))}
           </div>
 
-          {/* label pill */}
           <div
             className="absolute bottom-6 text-xs font-bold text-center py-1.5 px-4 rounded-full z-10"
             style={{ background: `${feature.accent}33`, color: feature.accent }}
@@ -98,7 +93,6 @@ const FeatureSlide = ({ feature, isActive }) => {
           </div>
         </div>
 
-        {/* Text */}
         <div className="flex flex-col gap-5 text-left max-w-md">
           <p
             className="text-xs font-black uppercase tracking-[0.3em]"
@@ -111,7 +105,6 @@ const FeatureSlide = ({ feature, isActive }) => {
           </h2>
           <p className="text-white/50 text-lg leading-relaxed">{feature.sub}</p>
 
-          {/* accent line */}
           <div
             className="w-12 h-1 rounded-full"
             style={{ background: feature.accent }}
@@ -133,7 +126,6 @@ const StickyFeature = () => {
 
   const introOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
-  // Update active feature based on scroll
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
       const idx = Math.min(
@@ -159,7 +151,6 @@ const StickyFeature = () => {
           background: `radial-gradient(ellipse at 50% 0%, ${activeFeature.accent}18 0%, #0a0a0a 60%)`,
         }}
       >
-        {/* Crossfade backgrounds smoothly */}
         {FEATURES.map((feature, i) => (
           <motion.div
             key={feature.id}
@@ -172,13 +163,11 @@ const StickyFeature = () => {
           />
         ))}
 
-        {/* ← Black intro overlay — starts opaque, fades out smoothly */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{ opacity: introOpacity, background: "#0a0a0a", zIndex: 30 }}
         />
 
-        {/* Progress dots */}
         <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
           {FEATURES.map((f, i) => (
             <motion.div
@@ -194,15 +183,6 @@ const StickyFeature = () => {
           ))}
         </div>
 
-        {/* Feature number */}
-        {/* <div className="absolute left-8 top-8 z-20">
-          <p className="text-white/20 text-xs uppercase tracking-widest">
-            {String(activeIdx + 1).padStart(2, "0")} /{" "}
-            {String(FEATURES.length).padStart(2, "0")}
-          </p>
-        </div> */}
-
-        {/* Slides */}
         {FEATURES.map((feature, i) => (
           <FeatureSlide
             key={feature.id}

@@ -93,7 +93,6 @@ const MemorableDay = ({ onAdd }) => {
       transition={{ duration: 0.4 }}
       className="flex flex-col gap-6"
     >
-      {/* Header */}
       <div className="flex flex-col gap-1">
         <p className="text-xs uppercase tracking-widest font-medium text-accent-green">
           {nowToronto.toFormat("d LLLL yyyy")}
@@ -106,7 +105,6 @@ const MemorableDay = ({ onAdd }) => {
         </p>
       </div>
 
-      {/* Status badge */}
       {summaryAdded && (
         <motion.div
           initial={{ opacity: 0, y: -4 }}
@@ -124,7 +122,6 @@ const MemorableDay = ({ onAdd }) => {
       )}
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {/* Summary */}
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             <label className="text-xs uppercase tracking-widest font-medium text-sub-text">
@@ -156,7 +153,6 @@ const MemorableDay = ({ onAdd }) => {
           />
         </div>
 
-        {/* Messages */}
         <AnimatePresence>
           {errorMessage && (
             <motion.p
@@ -180,7 +176,6 @@ const MemorableDay = ({ onAdd }) => {
           )}
         </AnimatePresence>
 
-        {/* Journal toggle */}
         {!summaryAdded && (
           <div
             className="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer"
@@ -220,7 +215,6 @@ const MemorableDay = ({ onAdd }) => {
           </div>
         )}
 
-        {/* Journal textarea */}
         <AnimatePresence>
           {showJournal && (
             <motion.div
@@ -252,7 +246,6 @@ const MemorableDay = ({ onAdd }) => {
           )}
         </AnimatePresence>
 
-        {/* Submit */}
         {!summaryAdded && (
           <motion.button
             type="submit"

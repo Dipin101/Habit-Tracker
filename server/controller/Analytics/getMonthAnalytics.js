@@ -27,7 +27,7 @@ const getMonthAnalytics = async (req, res) => {
       })),
       sleep: sleep.map((s) => ({
         day: s.day,
-        hours: +(s.hours / 60).toFixed(1), // convert minutes → hours
+        hours: +(s.hours / 60).toFixed(1),
       })),
       mood: mood.map((m) => ({
         day: parseInt(m.date.split("-")[2]),

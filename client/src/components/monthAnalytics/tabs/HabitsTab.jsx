@@ -26,7 +26,6 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
       transition={{ duration: 0.3 }}
       className="flex flex-col gap-6"
     >
-      {/* stat cards */}
       <div className="grid grid-cols-3 gap-3">
         <StatCard label="Overall" value={`${pct}%`} />
         <StatCard
@@ -37,7 +36,6 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
         <StatCard label="Best habit" value={`${best.pct}%`} sub={best.name} />
       </div>
 
-      {/* grid card */}
       <div
         className="flex flex-col gap-2 rounded-2xl p-4"
         style={{
@@ -50,7 +48,6 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
         </p>
         <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
           <div style={{ minWidth: `${LABEL_W + daysInMonth * (CELL + 2)}px` }}>
-            {/* day number header */}
             <div className="flex items-center mb-2">
               <div style={{ width: `${LABEL_W}px`, flexShrink: 0 }} />
               <div className="flex gap-0.5">
@@ -71,15 +68,12 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
                 ))}
               </div>
             </div>
-
-            {/* habit rows */}
             {habits.map((habit, hi) => {
               const p = Math.round(
                 (habit.completedDays.length / daysInMonth) * 100,
               );
               return (
                 <div key={habit.name} className="flex items-center mb-2">
-                  {/* label — name + % on same line */}
                   <div
                     style={{
                       width: `${LABEL_W}px`,
@@ -113,8 +107,6 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
                       {p}%
                     </span>
                   </div>
-
-                  {/* cells */}
                   <div className="flex gap-0.5">
                     {[...Array(daysInMonth)].map((_, i) => {
                       const day = i + 1,
@@ -154,7 +146,6 @@ const HabitsTab = ({ habits, daysInMonth, monthName, year }) => {
         </div>
       </div>
 
-      {/* legend */}
       <div className="flex gap-4 flex-wrap">
         {[
           { color: "#93B5A0", label: "Completed" },

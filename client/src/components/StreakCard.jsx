@@ -72,7 +72,6 @@ const StreakCard = () => {
 
       <p className="text-xs text-sub-text">{message || "Start your streak!"}</p>
 
-      {/* Mini streak bar */}
       <div className="flex gap-1 mt-1">
         {Array.from({ length: 7 }).map((_, i) => (
           <div

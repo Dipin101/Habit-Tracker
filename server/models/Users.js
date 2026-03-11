@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   phone: { type: Number },
   firebaseUid: { type: String, required: true, unique: true },
-  //for streak tracking
   streak: { type: Number, default: -1 },
   lastLoginDate: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },

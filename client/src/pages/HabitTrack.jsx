@@ -118,7 +118,6 @@ const HabitTrack = () => {
       style={{ overflowX: "hidden" }}
     >
       <div className="max-w-5xl mx-auto flex flex-col gap-6 w-full overflow-hidden">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,7 +156,6 @@ const HabitTrack = () => {
               boxShadow: "0 2px 24px rgba(0,0,0,0.06)",
             }}
           >
-            {/* Tabs — folder style */}
             <div className="flex gap-1 px-3 pt-3">
               {TABS.map(({ key, label }) => (
                 <button
@@ -187,12 +185,10 @@ const HabitTrack = () => {
               ))}
             </div>
 
-            {/* Tab content — glass */}
             <div
               className="relative rounded-b-2xl rounded-tr-2xl p-4 md:p-6 min-h-[60vh]"
               style={{
                 background: "rgba(235,245,250,0.7)",
-                // backdropFilter: "blur(20px)",
                 border: "1px solid rgba(255,255,255,0.7)",
                 boxShadow: "0 8px 32px rgba(0,0,0,0.06)",
                 overflow: "hidden",
@@ -242,7 +238,6 @@ const HabitTrack = () => {
         )}
       </div>
 
-      {/* FAB — Add button */}
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -256,7 +251,6 @@ const HabitTrack = () => {
         <IoAddOutline size={28} />
       </motion.button>
 
-      {/* Modal */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -283,7 +277,6 @@ const HabitTrack = () => {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal header */}
               <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-0.5">
                   <p
@@ -308,14 +301,12 @@ const HabitTrack = () => {
                 </button>
               </div>
 
-              {/* Divider */}
               <div
                 className="h-px"
                 style={{ background: "rgba(0,0,0,0.08)" }}
               />
 
               <form onSubmit={handleAdd} className="flex flex-col gap-4">
-                {/* Year */}
                 <div className="flex flex-col gap-1.5">
                   <label
                     className="text-xs uppercase tracking-widest font-medium"
@@ -336,7 +327,6 @@ const HabitTrack = () => {
                   />
                 </div>
 
-                {/* Month */}
                 <div className="flex flex-col gap-1.5">
                   <label
                     className="text-xs uppercase tracking-widest font-medium"
@@ -357,7 +347,6 @@ const HabitTrack = () => {
                   />
                 </div>
 
-                {/* Sleep toggle */}
                 <div
                   className="flex items-center justify-between px-4 py-3 rounded-xl cursor-pointer"
                   style={{
@@ -398,7 +387,6 @@ const HabitTrack = () => {
                   </div>
                 </div>
 
-                {/* Submit */}
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}

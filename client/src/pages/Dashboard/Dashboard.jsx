@@ -25,10 +25,10 @@ const cardVariants = {
 const Dashboard = () => {
   const [userName, setUserName] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [hasMonth, setHasMonth] = useState(null); // null = loading, true/false = known
+  const [hasMonth, setHasMonth] = useState(null);
   const [creatingMonth, setCreatingMonth] = useState(false);
 
-  const currentMonth = new Date().toLocaleString("default", { month: "long" }); // e.g. "March"
+  const currentMonth = new Date().toLocaleString("default", { month: "long" });
   const month = String(new Date().getMonth() + 1).padStart(2, "0");
   const year = new Date().getFullYear();
 
@@ -37,7 +37,6 @@ const Dashboard = () => {
       if (!user) return;
       setUserId(user.uid);
 
-      // fetch user name
       const idToken = await user.getIdToken();
       const userRes = await fetchFromBackend("/api/users/getUser", {
         method: "POST",
@@ -48,15 +47,13 @@ const Dashboard = () => {
       });
       setUserName(userRes.name);
 
-      // check if current month exists
       try {
         const monthRes = await fetchFromBackend(
           `/api/users/months/${user.uid}/${year}/${month}`,
         );
-        // if we get data back and it has content, month exists
+
         setHasMonth(!!monthRes);
       } catch {
-        // 404 or any error = no month yet
         setHasMonth(false);
       }
     });
@@ -82,7 +79,6 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10 overflow-auto">
       <div className="max-w-5xl mx-auto flex flex-col gap-8">
-        {/* Header — always visible */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,7 +96,6 @@ const Dashboard = () => {
           </p>
         </motion.div>
 
-        {/* Quote — always visible */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,9 +104,7 @@ const Dashboard = () => {
           <QuoteCard />
         </motion.div>
 
-        {/* Month gate */}
         {hasMonth === null ? (
-          // Loading state
           <div className="flex items-center justify-center py-16">
             <motion.div
               animate={{ opacity: [0.4, 1, 0.4] }}
@@ -122,14 +115,12 @@ const Dashboard = () => {
             </motion.div>
           </div>
         ) : hasMonth === false ? (
-          // No month yet — prompt to create
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="flex flex-col items-center gap-5 py-16 text-center"
           >
-            {/* Icon */}
             <div
               className="w-16 h-16 rounded-full flex items-center justify-center text-2xl"
               style={{
@@ -169,9 +160,7 @@ const Dashboard = () => {
             </Link>
           </motion.div>
         ) : (
-          // Has month — show full dashboard
           <>
-            {/* Mood */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -185,7 +174,6 @@ const Dashboard = () => {
               <MoodMeter />
             </motion.div>
 
-            {/* Section label */}
             <div className="flex items-center gap-3">
               <span className="text-xs uppercase tracking-widest text-sub-text font-medium">
                 Today's Overview
@@ -196,7 +184,6 @@ const Dashboard = () => {
               />
             </div>
 
-            {/* Stats grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { component: <StreakCard />, i: 0 },
@@ -221,7 +208,6 @@ const Dashboard = () => {
               ))}
             </div>
 
-            {/* Bottom section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <TodayHabits />
               <CompletedTask />

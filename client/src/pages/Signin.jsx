@@ -54,7 +54,6 @@ const Signin = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ firebaseUid: uid }),
       });
-      // console.log("Login successful: ", res.message || res);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -83,7 +82,6 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6 py-16 relative overflow-hidden">
-      {/* Background glows */}
       <div
         className="fixed top-1/4 left-1/4 w-96 h-96 rounded-full pointer-events-none"
         style={{ background: "rgba(244,162,97,0.15)", filter: "blur(80px)" }}
@@ -104,13 +102,11 @@ const Signin = () => {
           border: "1px solid rgba(255,255,255,0.6)",
         }}
       >
-        {/* Top glow */}
         <div
           className="absolute -top-16 left-1/2 -translate-x-1/2 w-64 h-16 rounded-full pointer-events-none"
           style={{ background: "rgba(200,159,187,0.2)", filter: "blur(40px)" }}
         />
 
-        {/* Header */}
         <div className="flex flex-col items-center gap-2 text-center">
           <span
             className="px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-[0.25em] text-sub-text"
@@ -127,7 +123,6 @@ const Signin = () => {
           <p className="text-sm text-sub-text">Continue your streak today</p>
         </div>
 
-        {/* Divider */}
         <div className="flex items-center gap-3">
           <div
             className="flex-1 h-px"
@@ -140,9 +135,7 @@ const Signin = () => {
           />
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          {/* Email */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs uppercase tracking-widest font-medium text-sub-text">
               Email
@@ -168,7 +161,6 @@ const Signin = () => {
             </span>
           </div>
 
-          {/* Password */}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs uppercase tracking-widest font-medium text-sub-text">
               Password
@@ -240,7 +232,6 @@ const Signin = () => {
               {authError}
             </motion.p>
           )}
-          {/* Forgot password */}
           <div className="flex flex-col items-end gap-1 -mt-2">
             <button
               type="button"
@@ -250,7 +241,6 @@ const Signin = () => {
               Forgot password?
             </button>
 
-            {/* success or error message */}
             <AnimatePresence>
               {resetMsg && (
                 <motion.p
@@ -275,7 +265,6 @@ const Signin = () => {
             </AnimatePresence>
           </div>
 
-          {/* Submit */}
           <motion.button
             type="submit"
             disabled={isLoading}
@@ -302,7 +291,6 @@ const Signin = () => {
           </motion.button>
         </form>
 
-        {/* Signup redirect */}
         <p className="text-center text-xs text-sub-text">
           Don't have an account?{" "}
           <Link
@@ -313,7 +301,6 @@ const Signin = () => {
           </Link>
         </p>
 
-        {/* Back to home */}
         <Link
           to="/"
           className="text-center text-xs hover:opacity-70 transition-opacity text-sub-text"

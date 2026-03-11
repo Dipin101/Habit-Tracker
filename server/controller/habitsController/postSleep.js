@@ -19,7 +19,6 @@ const postSleep = async (req, res) => {
     const dayIndex = monthData.sleep.findIndex(
       (d) => Number(d.day) === Number(day),
     );
-    // console.log(dayIndex);
     if (dayIndex === -1) {
       monthData.sleep.push({
         day: Number(day),
@@ -32,7 +31,6 @@ const postSleep = async (req, res) => {
     }
 
     await user.save();
-    // console.log(user.months.sleep);
     res.status(200).json({ message: "Sleep saved successfully" });
   } catch (err) {
     return res

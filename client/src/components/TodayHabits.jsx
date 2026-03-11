@@ -32,7 +32,6 @@ const TodayHabits = () => {
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase tracking-widest text-sub-text font-medium">
           Today's Habits
@@ -44,7 +43,6 @@ const TodayHabits = () => {
         )}
       </div>
 
-      {/* Progress bar */}
       {!loading && habits.length > 0 && (
         <div
           className="w-full h-1.5 rounded-full overflow-hidden"
@@ -62,7 +60,6 @@ const TodayHabits = () => {
         </div>
       )}
 
-      {/* Habit list */}
       {loading ? (
         <p className="text-xs text-sub-text">Loading...</p>
       ) : habits.length === 0 ? (

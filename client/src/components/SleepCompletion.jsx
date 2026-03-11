@@ -51,21 +51,17 @@ const MonthlySleepCompletion = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      {/* Label */}
       <p className="text-xs uppercase tracking-widest text-sub-text font-medium">
         Avg Sleep (Month)
       </p>
 
-      {/* Main value */}
       <p className="text-2xl font-bold text-text">
         {averageHours}{" "}
         <span className="text-base font-medium text-sub-text">hrs</span>
       </p>
 
-      {/* Aim note */}
       <p className="text-xs text-sub-text">Aim for 7–8 hrs daily</p>
 
-      {/* Progress bar */}
       <div className="mt-1">
         <div className="flex justify-between text-xs text-sub-text mb-1">
           <span>Completion</span>

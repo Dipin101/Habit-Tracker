@@ -2,14 +2,12 @@ const Habits = require("../../models/Habits");
 
 const getHabits = async (req, res) => {
   try {
-    // console.log(`api hit`);
     const { userId } = req.params;
     const { month, year } = req.query;
 
     const habitsDoc = await Habits.findOne({ userId });
     if (!habitsDoc) return res.status(404).json({ message: "No habits found" });
 
-    //Find month Data
     const monthData = habitsDoc.months.find(
       (m) => m.month === month && String(m.year) === String(year),
     );

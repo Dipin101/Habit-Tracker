@@ -53,7 +53,6 @@ const CompletionCard = () => {
           : `${habits.filter((h) => h.status === "completed").length} of ${habits.length} completed`}
       </p>
 
-      {/* Progress bar */}
       <div className="mt-1">
         <div
           className="w-full h-1.5 rounded-full overflow-hidden"

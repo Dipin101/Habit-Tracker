@@ -1,7 +1,6 @@
 const { DateTime } = require("luxon");
 const Habits = require("../../models/Habits");
 
-// GET today's mood
 const getTodayMood = async (req, res) => {
   try {
     const { firebaseUid } = req.body;
@@ -26,7 +25,6 @@ const getTodayMood = async (req, res) => {
   }
 };
 
-// SAVE today's mood
 const saveTodayMood = async (req, res) => {
   try {
     const { firebaseUid, rating } = req.body;

@@ -4,7 +4,7 @@ const HabitDaySchema = new mongoose.Schema({
   month: String,
   year: Number,
   day: Number,
-  summary: { type: String, maxlength: 100, default: "" }, // For Memorable/Journal
+  summary: { type: String, maxlength: 100, default: "" },
   journal: { type: String, default: "" },
 });
 
@@ -54,7 +54,7 @@ const MonthDataSchema = new mongoose.Schema({
 
 const HabitsSchema = new mongoose.Schema({
   userId: { type: String, required: true },
-  months: [MonthDataSchema], // all months stored in this array
+  months: [MonthDataSchema],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

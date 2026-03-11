@@ -14,11 +14,18 @@ const STATUS = {
   IN_PROGRESS: "in progress",
 };
 
+// Modal step: "input" → user types habits, "confirm" → user reviews before locking
+const MODAL_STEP = {
+  INPUT: "input",
+  CONFIRM: "confirm",
+};
+
 const HabitsToTrack = () => {
   const [savedHabits, setSavedHabits] = useState([]);
   const [habitStatuses, setHabitStatuses] = useState({});
   const [habitComments, setHabitComments] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [modalStep, setModalStep] = useState(MODAL_STEP.INPUT);
   const [modalInputs, setModalInputs] = useState([]);
   const [modalError, setModalError] = useState({});
   const [showCommentModal, setShowCommentModal] = useState(false);
@@ -41,10 +48,10 @@ const HabitsToTrack = () => {
   }, []);
 
   useEffect(() => {
-    if (showModal && modalInputs.length > 0) {
+    if (showModal && modalStep === MODAL_STEP.INPUT && modalInputs.length > 0) {
       inputRefs.current[modalInputs.length - 1]?.focus();
     }
-  }, [showModal, modalInputs.length]);
+  }, [showModal, modalInputs.length, modalStep]);
 
   useEffect(() => {
     if (showCommentModal) commentRefs.current?.focus();
@@ -53,6 +60,7 @@ const HabitsToTrack = () => {
   const openModal = () => {
     if (savedHabits.length >= MAX_HABITS) return;
     setModalInputs([""]);
+    setModalStep(MODAL_STEP.INPUT);
     setShowModal(true);
   };
 
@@ -91,7 +99,20 @@ const HabitsToTrack = () => {
     validateModalInputs(updated);
   };
 
-  const handleSave = () => {
+  // Move from input step → confirmation step
+  const handleProceedToConfirm = () => {
+    const cleaned = modalInputs
+      .map((h) => h.trim())
+      .filter(
+        (h, i, arr) =>
+          h !== "" && !savedHabits.includes(h) && arr.indexOf(h) === i,
+      );
+    if (cleaned.length === 0) return;
+    setModalStep(MODAL_STEP.CONFIRM);
+  };
+
+  // Final confirmation: actually save
+  const handleConfirmAndSave = () => {
     const cleaned = modalInputs
       .map((h) => h.trim())
       .filter(
@@ -115,6 +136,11 @@ const HabitsToTrack = () => {
     setHabitComments(comments);
     setShowModal(false);
     handleSubmitHabits(newSaved, statuses, comments);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalStep(MODAL_STEP.INPUT);
   };
 
   const toggleStatus = (index, status) => {
@@ -212,6 +238,14 @@ const HabitsToTrack = () => {
 
   const remainingHabits = MAX_HABITS - savedHabits.length;
 
+  // Habits that will actually be saved (cleaned preview for confirm step)
+  const habitsToConfirm = modalInputs
+    .map((h) => h.trim())
+    .filter(
+      (h, i, arr) =>
+        h !== "" && !savedHabits.includes(h) && arr.indexOf(h) === i,
+    );
+
   const statusConfig = {
     [STATUS.COMPLETED]: {
       icon: <FaCheck size={12} />,
@@ -239,6 +273,8 @@ const HabitsToTrack = () => {
     boxShadow: "0 24px 48px rgba(0,0,0,0.12)",
   };
 
+  const hasErrors = Object.keys(modalError).length > 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -246,7 +282,6 @@ const HabitsToTrack = () => {
       transition={{ duration: 0.4 }}
       className="flex flex-col gap-6"
     >
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex flex-col gap-1">
           <p className="text-xs uppercase tracking-widest font-medium text-accent-green">
@@ -282,13 +317,11 @@ const HabitsToTrack = () => {
         )}
       </div>
 
-      {/* Habits list */}
       {savedHabits.length > 0 && (
         <div
           className="rounded-2xl overflow-hidden"
           style={{ border: "1px solid rgba(0,0,0,0.06)" }}
         >
-          {/* Table header — hidden on mobile */}
           <div
             className="hidden sm:grid grid-cols-[1fr_auto] gap-4 px-4 py-2 text-xs uppercase tracking-widest font-medium text-sub-text"
             style={{
@@ -322,7 +355,6 @@ const HabitsToTrack = () => {
                   className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
-                    {/* Status dot */}
                     <div
                       className="w-2 h-2 rounded-full flex-shrink-0"
                       style={{
@@ -336,7 +368,6 @@ const HabitsToTrack = () => {
                     </span>
                   </div>
 
-                  {/* Action buttons */}
                   <div className="flex items-center gap-2 ml-5 sm:ml-0">
                     {Object.entries(statusConfig).map(([status, config]) => (
                       <motion.button
@@ -359,7 +390,6 @@ const HabitsToTrack = () => {
                       </motion.button>
                     ))}
 
-                    {/* Comment button */}
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -383,7 +413,6 @@ const HabitsToTrack = () => {
         </div>
       )}
 
-      {/* Empty state */}
       {savedHabits.length === 0 && (
         <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
           <div
@@ -411,7 +440,7 @@ const HabitsToTrack = () => {
               background: "rgba(0,0,0,0.4)",
               backdropFilter: "blur(4px)",
             }}
-            onClick={() => setShowModal(false)}
+            onClick={closeModal}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -422,130 +451,279 @@ const HabitsToTrack = () => {
               style={modalStyle}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex flex-col gap-0.5">
-                  <p
-                    className="text-xs uppercase tracking-widest font-medium"
-                    style={{ color: "#a87d9a" }}
+              {/* ── INPUT STEP ── */}
+              <AnimatePresence mode="wait">
+                {modalStep === MODAL_STEP.INPUT && (
+                  <motion.div
+                    key="input"
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-5"
                   >
-                    New Habits
-                  </p>
-                  <h2
-                    className="text-lg font-bold"
-                    style={{ color: "#0d2233" }}
-                  >
-                    Add Your Habits
-                  </h2>
-                </div>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: "rgba(0,0,0,0.06)", color: "#5a7a8f" }}
-                >
-                  <AiOutlineClose size={14} />
-                </button>
-              </div>
-
-              <p
-                className="text-xs px-3 py-2 rounded-xl"
-                style={{ background: "rgba(220,38,38,0.08)", color: "#dc2626" }}
-              >
-                Once added, habits cannot be edited for the month.
-              </p>
-
-              <div
-                className="h-px"
-                style={{ background: "rgba(0,0,0,0.06)" }}
-              />
-
-              <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
-                {modalInputs.map((habit, index) => (
-                  <div key={index} className="flex flex-col gap-1">
-                    <div className="flex gap-2 items-center">
-                      <input
-                        ref={(el) => (inputRefs.current[index] = el)}
-                        type="text"
-                        value={habit}
-                        onChange={(e) =>
-                          updateModalInput(index, e.target.value)
-                        }
-                        placeholder={`Habit ${savedHabits.length + index + 1}`}
-                        className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
-                        style={{
-                          background: "rgba(0,0,0,0.05)",
-                          border: `1px solid ${modalError[index] ? "#dc2626" : "rgba(0,0,0,0.08)"}`,
-                          color: "#0d2233",
-                        }}
-                      />
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-0.5">
+                        <p
+                          className="text-xs uppercase tracking-widest font-medium"
+                          style={{ color: "#a87d9a" }}
+                        >
+                          New Habits
+                        </p>
+                        <h2
+                          className="text-lg font-bold"
+                          style={{ color: "#0d2233" }}
+                        >
+                          Add Your Habits
+                        </h2>
+                      </div>
                       <button
-                        onClick={() => removeModalInput(index)}
-                        className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                        onClick={closeModal}
+                        className="w-8 h-8 rounded-xl flex items-center justify-center"
                         style={{
-                          background: "rgba(220,38,38,0.08)",
-                          color: "#dc2626",
+                          background: "rgba(0,0,0,0.06)",
+                          color: "#5a7a8f",
                         }}
                       >
                         <AiOutlineClose size={14} />
                       </button>
                     </div>
-                    {modalError[index] && (
-                      <p className="text-xs pl-1" style={{ color: "#dc2626" }}>
-                        {modalError[index]}
-                      </p>
+
+                    <p
+                      className="text-xs px-3 py-2 rounded-xl"
+                      style={{
+                        background: "rgba(220,38,38,0.08)",
+                        color: "#dc2626",
+                      }}
+                    >
+                      Once added, habits cannot be edited for the month.
+                    </p>
+
+                    <div
+                      className="h-px"
+                      style={{ background: "rgba(0,0,0,0.06)" }}
+                    />
+
+                    <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
+                      {modalInputs.map((habit, index) => (
+                        <div key={index} className="flex flex-col gap-1">
+                          <div className="flex gap-2 items-center">
+                            <input
+                              ref={(el) => (inputRefs.current[index] = el)}
+                              type="text"
+                              value={habit}
+                              onChange={(e) =>
+                                updateModalInput(index, e.target.value)
+                              }
+                              placeholder={`Habit ${savedHabits.length + index + 1}`}
+                              className="flex-1 px-4 py-2.5 rounded-xl text-sm outline-none"
+                              style={{
+                                background: "rgba(0,0,0,0.05)",
+                                border: `1px solid ${modalError[index] ? "#dc2626" : "rgba(0,0,0,0.08)"}`,
+                                color: "#0d2233",
+                              }}
+                            />
+                            <button
+                              onClick={() => removeModalInput(index)}
+                              className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                              style={{
+                                background: "rgba(220,38,38,0.08)",
+                                color: "#dc2626",
+                              }}
+                            >
+                              <AiOutlineClose size={14} />
+                            </button>
+                          </div>
+                          {modalError[index] && (
+                            <p
+                              className="text-xs pl-1"
+                              style={{ color: "#dc2626" }}
+                            >
+                              {modalError[index]}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    {savedHabits.length + modalInputs.length < MAX_HABITS && (
+                      <button
+                        onClick={addHabitInput}
+                        disabled={hasErrors}
+                        className="flex items-center gap-2 text-sm font-medium transition-opacity"
+                        style={{
+                          color: hasErrors ? "#5a7a8f" : "#a87d9a",
+                          opacity: hasErrors ? 0.5 : 1,
+                        }}
+                      >
+                        <AiOutlinePlus size={16} /> Add Another
+                      </button>
                     )}
-                  </div>
-                ))}
-              </div>
 
-              {savedHabits.length + modalInputs.length < MAX_HABITS && (
-                <button
-                  onClick={addHabitInput}
-                  disabled={Object.keys(modalError).length > 0}
-                  className="flex items-center gap-2 text-sm font-medium transition-opacity"
-                  style={{
-                    color:
-                      Object.keys(modalError).length > 0
-                        ? "#5a7a8f"
-                        : "#a87d9a",
-                    opacity: Object.keys(modalError).length > 0 ? 0.5 : 1,
-                  }}
-                >
-                  <AiOutlinePlus size={16} /> Add Another
-                </button>
-              )}
+                    <div className="flex gap-3 mt-1">
+                      <button
+                        onClick={closeModal}
+                        className="flex-1 py-2.5 rounded-xl text-sm font-medium"
+                        style={{
+                          background: "rgba(0,0,0,0.05)",
+                          color: "#5a7a8f",
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={handleProceedToConfirm}
+                        disabled={hasErrors || habitsToConfirm.length === 0}
+                        className="flex-1 py-2.5 rounded-xl text-sm font-semibold"
+                        style={{
+                          background:
+                            hasErrors || habitsToConfirm.length === 0
+                              ? "rgba(0,0,0,0.1)"
+                              : "linear-gradient(135deg, #C89FBB, #a87d9a)",
+                          color:
+                            hasErrors || habitsToConfirm.length === 0
+                              ? "#5a7a8f"
+                              : "white",
+                        }}
+                      >
+                        Review Habits →
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                )}
 
-              <div className="flex gap-3 mt-1">
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="flex-1 py-2.5 rounded-xl text-sm font-medium"
-                  style={{ background: "rgba(0,0,0,0.05)", color: "#5a7a8f" }}
-                >
-                  Cancel
-                </button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleSave}
-                  disabled={Object.keys(modalError).length > 0}
-                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{
-                    background:
-                      Object.keys(modalError).length > 0
-                        ? "rgba(0,0,0,0.1)"
-                        : "linear-gradient(135deg, #C89FBB, #a87d9a)",
-                    color:
-                      Object.keys(modalError).length > 0 ? "#5a7a8f" : "white",
-                  }}
-                >
-                  Save Habits
-                </motion.button>
-              </div>
+                {/* ── CONFIRM STEP ── */}
+                {modalStep === MODAL_STEP.CONFIRM && (
+                  <motion.div
+                    key="confirm"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 16 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-5"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-0.5">
+                        <p
+                          className="text-xs uppercase tracking-widest font-medium"
+                          style={{ color: "#a87d9a" }}
+                        >
+                          Confirm
+                        </p>
+                        <h2
+                          className="text-lg font-bold"
+                          style={{ color: "#0d2233" }}
+                        >
+                          Double-check Your Habits
+                        </h2>
+                      </div>
+                      <button
+                        onClick={closeModal}
+                        className="w-8 h-8 rounded-xl flex items-center justify-center"
+                        style={{
+                          background: "rgba(0,0,0,0.06)",
+                          color: "#5a7a8f",
+                        }}
+                      >
+                        <AiOutlineClose size={14} />
+                      </button>
+                    </div>
+
+                    {/* Strong warning banner */}
+                    <div
+                      className="flex gap-3 items-start px-3 py-3 rounded-xl"
+                      style={{
+                        background: "rgba(220,38,38,0.08)",
+                        border: "1px solid rgba(220,38,38,0.2)",
+                      }}
+                    >
+                      <span style={{ fontSize: 16 }}>⚠️</span>
+                      <p
+                        className="text-xs leading-relaxed"
+                        style={{ color: "#dc2626" }}
+                      >
+                        These habits are{" "}
+                        <strong>permanent for {displayMonth}</strong>. You won't
+                        be able to edit or delete them once confirmed. Make sure
+                        everything looks right!
+                      </p>
+                    </div>
+
+                    <div
+                      className="h-px"
+                      style={{ background: "rgba(0,0,0,0.06)" }}
+                    />
+
+                    {/* List of habits to confirm */}
+                    <ul className="flex flex-col gap-2">
+                      {habitsToConfirm.map((habit, i) => (
+                        <motion.li
+                          key={i}
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.06 }}
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-xl"
+                          style={{
+                            background: "rgba(200,159,187,0.1)",
+                            border: "1px solid rgba(200,159,187,0.25)",
+                          }}
+                        >
+                          <div
+                            className="w-5 h-5 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-bold"
+                            style={{
+                              background: "rgba(200,159,187,0.2)",
+                              color: "#a87d9a",
+                            }}
+                          >
+                            {savedHabits.length + i + 1}
+                          </div>
+                          <span
+                            className="text-sm font-medium capitalize"
+                            style={{ color: "#0d2233" }}
+                          >
+                            {habit}
+                          </span>
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    <div className="flex gap-3 mt-1">
+                      {/* Go back to edit */}
+                      <button
+                        onClick={() => setModalStep(MODAL_STEP.INPUT)}
+                        className="flex-1 py-2.5 rounded-xl text-sm font-medium"
+                        style={{
+                          background: "rgba(0,0,0,0.05)",
+                          color: "#5a7a8f",
+                        }}
+                      >
+                        ← Edit
+                      </button>
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={handleConfirmAndSave}
+                        className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #C89FBB, #a87d9a)",
+                          boxShadow: "0 8px 24px rgba(200,159,187,0.35)",
+                        }}
+                      >
+                        Confirm & Lock In
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Comment Modal */}
+      {/* Comment Modal (unchanged) */}
       <AnimatePresence>
         {showCommentModal && (
           <motion.div

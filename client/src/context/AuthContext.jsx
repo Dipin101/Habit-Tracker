@@ -1,7 +1,6 @@
-// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebase"; // Adjust path to firebaseConfig
+import { auth } from "../firebase";
 
 const AuthContext = createContext();
 
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     await signOut(auth);
     setUser(null);
-    console.log("Logged out, session cleared"); //--> session should be cleared
+    console.log("Logged out, session cleared");
   };
 
   return (

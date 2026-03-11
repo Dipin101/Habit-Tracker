@@ -65,8 +65,6 @@ const QuoteCard = () => {
         boxShadow: "0 2px 16px rgba(0,0,0,0.04)",
       }}
     >
-      {/* Decorative quote mark */}
-
       <div className="flex flex-col gap-3 relative z-10 items-center text-center">
         <p className="text-xs uppercase tracking-widest font-bold text-accent-pink">
           Quote of the Day

@@ -16,7 +16,6 @@ const CompletedTask = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user.uid }),
       });
-      // only show completed ones
       const completed = (res.habits || []).filter(
         (h) => h.status === "completed",
       );
