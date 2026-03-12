@@ -29,6 +29,10 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRoutes);
 
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
+
 const startServer = async () => {
   try {
     await connectDB();
