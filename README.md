@@ -6,6 +6,19 @@ A personal full-stack habit tracking app built out of frustration with todo-list
 
 ---
 
+## 🧪 Try It Out
+
+Don't want to sign up? Use the demo account to explore all features:
+
+| Field    | Value             |
+| -------- | ----------------- |
+| Email    | someone@gmail.com |
+| Password | someone123        |
+
+> Sample data is already loaded so you can explore the analytics, habits, mood, and sleep tracking right away.
+
+---
+
 ## 🎨 Design Process
 
 The UI was designed in Figma before development — including wireframes,
