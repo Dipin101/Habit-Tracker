@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar.jsx";
 import { Link } from "react-router-dom";
-import { motion, stagger } from "framer-motion";
+import { motion } from "framer-motion";
 import heroImage from "../assets/image/hero_section.svg";
 import StickyFeature from "../components/StickyFeature.jsx";
 import ZoomBridge from "../components/ZoomBridge.jsx";
