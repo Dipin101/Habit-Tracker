@@ -12,6 +12,7 @@ import TodayHabits from "../../components/TodayHabits";
 import CompletedTask from "../../components/CompletedTask";
 import MoodMeter from "../../components/MoodMeter";
 import { Link } from "react-router-dom";
+import { usePushNotifications } from "../../hooks/Usepushnotification";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -75,6 +76,8 @@ const Dashboard = () => {
       setCreatingMonth(false);
     }
   };
+
+  usePushNotifications(userId);
 
   return (
     <div className="min-h-screen bg-background px-4 py-8 md:px-8 md:py-10 overflow-auto">

@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   firebaseUid: { type: String, required: true, unique: true },
   streak: { type: Number, default: -1 },
   lastLoginDate: { type: String, default: null },
+  fcmToken: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
 });
 

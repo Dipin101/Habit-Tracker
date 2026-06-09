@@ -24,6 +24,7 @@ const {
 } = require("../controller/dashboardController/MoodController");
 const getMonthsSummary = require("../controller/Analytics/getMonthsSummary");
 const getMonthAnalytics = require("../controller/Analytics/getMonthAnalytics");
+const getNotification = require("../controller/getNotification");
 
 const router = express.Router();
 
@@ -50,5 +51,6 @@ router.post("/mood-save", saveTodayMood);
 router.patch("/updateProfile", updateProfile);
 router.get("/months-summary/:userId/:year", getMonthsSummary);
 router.get("/analytics/:userId/:year/:month", getMonthAnalytics);
+router.patch("/fcm-token", getNotification);
 
 module.exports = router;

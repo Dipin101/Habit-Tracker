@@ -16,6 +16,7 @@ app.use(
     origin: [
       "https://habit-tracker-three-ivory.vercel.app",
       "http://localhost:5173",
+      "http://localhost:4000",
     ],
     credentials: true,
   }),
