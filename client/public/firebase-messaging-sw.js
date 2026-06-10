@@ -24,7 +24,9 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage((payload) => {
   console.log("[SW] Background message received:", payload);
 
-  const { title, body, icon } = payload.notification ?? {};
+  const title = payload.data?.title ?? "Habit Tracker";
+  const body = payload.data?.body ?? "Time to check in!";
+  const icon = payload.data?.icon ?? "/logo192.png";
 
   self.registration.showNotification(title ?? "Habit Tracker", {
     body: body ?? "Time to check in on your habits!",

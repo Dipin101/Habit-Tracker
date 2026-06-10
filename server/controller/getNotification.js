@@ -54,13 +54,14 @@ async function sendPushToAll(title, body) {
 
     const response = await admin.messaging().sendEachForMulticast({
       tokens,
-      notification: { title, body },
+      data: {
+        title,
+        body,
+        icon: "/logo192.png",
+      },
       webpush: {
-        notification: {
-          icon: "/logo192.png",
-          badge: "/logo192.png",
-          tag: "habit-reminder",
-          renotify: true,
+        headers: {
+          Urgency: "high",
         },
       },
     });
