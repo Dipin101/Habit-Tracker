@@ -33,6 +33,10 @@ app.use("/api/users", userRoutes);
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
+//uptime
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 const startServer = async () => {
   try {
