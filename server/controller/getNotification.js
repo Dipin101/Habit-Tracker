@@ -94,7 +94,7 @@ async function sendPushToAll(title, body) {
 // ─── Cron Jobs ────────────────────────────────────────────────────────────────
 // Runs at 12:00 PM every day
 cron.schedule(
-  "0 12 * * *",
+  "* * * * *",
   () => {
     console.log("[CRON] Firing Testing");
     sendPushToAll(
